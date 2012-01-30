@@ -1,0 +1,234 @@
+<?php
+class WPEditor {
+  
+  public function install() {
+    
+    global $wpdb;
+    $prefix = $this->getTablePrefix();
+    $sqlFile = WPEDITOR_PATH . 'sql/database.sql';
+    $sql = str_replace('[prefix]', $prefix, file_get_contents($sqlFile));
+    $queries = explode(";\n", $sql);
+    $wpdb->hide_errors();
+    foreach($queries as $sql) {
+      if(strlen($sql) > 5) {
+        $wpdb->query($sql);
+      }
+    }
+    
+    // Set the version number for this version of WPEditor
+    require_once(WPEDITOR_PATH . 'classes/WPEditorSetting.php');
+    WPEditorSetting::setValue('version', WPEDITOR_VERSION_NUMBER);
+
+    if(!WPEditorSetting::getValue('upgrade')) {
+      $this->firstInstall();
+    }
+
+  }
+  
+  public function firstInstall() {
+    
+    // Set the database to upgrade instead of first time install
+    WPEditorSetting::setValue('upgrade', 1);
+    
+    // Check if the plugin and theme editors have been hidden before and hide them if not
+    if(!WPEditorSetting::getValue('hide_default_plugin_editor')) {
+      WPEditorSetting::setValue('hide_default_plugin_editor', 1);
+    }
+    if(!WPEditorSetting::getValue('hide_default_theme_editor')) {
+      WPEditorSetting::setValue('hide_default_theme_editor', 1);
+    }
+    
+    // Check if the edit link for plugins has been hidden before and hide if not
+    if(!WPEditorSetting::getValue('replace_plugin_edit_links')) {
+      WPEditorSetting::setValue('replace_plugin_edit_links', 1);
+    }
+    
+    // Check if the plugin line numbers have been disabled and enable if not
+    if(!WPEditorSetting::getValue('enable_plugin_line_numbers')) {
+      WPEditorSetting::setValue('enable_plugin_line_numbers', 1);
+    }
+    
+    // Check if the theme line numbers have been disabled and enable if not
+    if(!WPEditorSetting::getValue('enable_theme_line_numbers')) {
+      WPEditorSetting::setValue('enable_theme_line_numbers', 1);
+    }
+    
+    // Check if plugin line wrapping has been disabled and enable if not
+    if(!WPEditorSetting::getValue('enable_plugin_line_wrapping')) {
+      WPEditorSetting::setValue('enable_plugin_line_wrapping', 1);
+    }
+    
+    // Check if theme line wrapping has been disabled and enable if not
+    if(!WPEditorSetting::getValue('enable_theme_line_wrapping')) {
+      WPEditorSetting::setValue('enable_theme_line_wrapping', 1);
+    }
+    
+    // Check if plugin active line highlighting has been disabled and enable if not
+    if(!WPEditorSetting::getValue('enable_plugin_active_line')) {
+      WPEditorSetting::setValue('enable_plugin_active_line', 1);
+    }
+    
+    // Check if theme active line highlighting has been disabled and enable if not
+    if(!WPEditorSetting::getValue('enable_theme_active_line')) {
+      WPEditorSetting::setValue('enable_theme_active_line', 1);
+    }
+    
+    // Check if the default allowed extensions for the plugin editor have been set and set if not
+    if(!WPEditorSetting::getValue('plugin_editor_allowed_extensions')) {
+      WPEditorSetting::setValue('plugin_editor_allowed_extensions', 'php~js~css~txt~htm~html~jpg~jpeg~png~gif~sql~po');
+    }
+    
+    // Check if the default allowed extensions for the theme editor have been set and set if not
+    if(!WPEditorSetting::getValue('theme_editor_allowed_extensions')) {
+      WPEditorSetting::setValue('theme_editor_allowed_extensions', 'php~js~css~txt~htm~html~jpg~jpeg~png~gif~sql~po');
+    }
+    
+  }
+  
+  public function init() {
+    // Load all additional required classes
+    $this->loadCoreModels();
+    
+    // Verify that upgrade has been run
+    if(IS_ADMIN) {
+      if(version_compare(WPEDITOR_VERSION_NUMBER, WPEditorSetting::getValue('version'))) {
+        $this->install();
+      }
+    }
+    
+    // Define debugging and testing info
+    $wpeditor_logging = WPEditorSetting::getValue('wpeditor_logging') ? true : false;
+    define('WPEDITOR_DEBUG', $wpeditor_logging);
+    
+    $default_wpeditor_roles = array(
+      'settings' => 'manage_options',
+      'theme-editor' => 'edit_themes',
+      'plugin-editor' => 'edit_plugins'
+    );
+    // Set default admin page roles if there isn't any
+    $wpeditor_roles = WPEditorSetting::getValue('admin_page_roles');
+    if(empty($wpeditor_roles)){
+      WPEditorSetting::setValue('admin_page_roles',serialize($default_wpeditor_roles));
+    }
+    // Ensure that all admin page roles have been set.
+    else {
+      $update_roles = false;
+      $wpeditor_roles = unserialize($wpeditor_roles);
+      foreach($default_wpeditor_roles as $key => $value) {
+        if(!array_key_exists($key, $wpeditor_roles)) {
+          $wpeditor_roles[$key] = $value;
+          $update_roles = true;
+        }
+      }
+      if($update_roles) {
+        WPEditorSetting::setValue('admin_page_roles',serialize($wpeditor_roles));
+      }
+      $wpeditor_roles = serialize($wpeditor_roles);
+    }
+    
+    if(IS_ADMIN) {
+      // Load default stylesheet
+      add_action('admin_init', array($this, 'registerDefaultStylesheet'));
+      // Load default script
+      add_action('admin_init', array($this, 'registerDefaultScript'));
+      
+      // Remove default editor submenus
+      add_action('admin_menu', array('WPEditorAdmin', 'removeDefaultEditorMenus'));
+      // Add WP Editor Settings Page
+      add_action('admin_menu', array('WPEditorAdmin', 'buildAdminMenu'));
+
+      // Add Plugin Editor Page
+      add_action('admin_menu', array('WPEditorAdmin', 'addPluginsPage'));
+      // Add Theme Editor Page
+      add_action('admin_menu', array('WPEditorAdmin', 'addThemesPage'));
+      
+      // Ajax request to save settings
+      add_action('wp_ajax_save_wpeditor_settings', array('WPEditorAjax', 'saveSettings'));
+      
+      // Ajax request to save files
+      add_action('wp_ajax_save_files', array('WPEditorAjax', 'saveFile'));
+      
+      // Ajax request to retrieve files and folders
+      add_action('wp_ajax_ajax_folders', array('WPEditorAjax', 'ajaxFolders'));
+      
+      // Replace default plugin edit links
+      add_filter('plugin_action_links', array($this, 'replacePluginEditLinks'),9,1);
+      
+    }
+  }
+  
+  public function loadCoreModels() {
+    require_once(WPEDITOR_PATH . 'classes/WPEditorAdmin.php');
+    require_once(WPEDITOR_PATH . 'classes/WPEditorAjax.php');
+    require_once(WPEDITOR_PATH . 'classes/WPEditorBrowser.php');
+    require_once(WPEDITOR_PATH . 'classes/WPEditorException.php');
+    require_once(WPEDITOR_PATH . 'classes/WPEditorLog.php');
+    require_once(WPEDITOR_PATH . 'classes/WPEditorPlugins.php');
+    require_once(WPEDITOR_PATH . 'classes/WPEditorSetting.php');
+    require_once(WPEDITOR_PATH . 'classes/WPEditorThemes.php');
+  }
+  
+  public function registerDefaultStylesheet() {
+    wp_register_style('wpeditor', WPEDITOR_URL . '/wpeditor.css');
+    wp_register_style('fancybox', WPEDITOR_URL . '/extensions/fancybox/jquery.fancybox-1.3.4.css');
+    wp_register_style('codemirror', WPEDITOR_URL . '/extensions/codemirror/codemirror.css');
+    wp_register_style('codemirror_dialog', WPEDITOR_URL . '/extensions/codemirror/dialog.css');
+    wp_register_style('codemirror_theme_cobalt', WPEDITOR_URL . '/extensions/codemirror/themes/cobalt.css');
+    wp_register_style('codemirror_theme_eclipse', WPEDITOR_URL . '/extensions/codemirror/themes/eclipse.css');
+    wp_register_style('codemirror_theme_elegant', WPEDITOR_URL . '/extensions/codemirror/themes/elegant.css');
+    wp_register_style('codemirror_theme_monokai', WPEDITOR_URL . '/extensions/codemirror/themes/monokai.css');
+    wp_register_style('codemirror_theme_neat', WPEDITOR_URL . '/extensions/codemirror/themes/neat.css');
+    wp_register_style('codemirror_theme_night', WPEDITOR_URL . '/extensions/codemirror/themes/night.css');
+    wp_register_style('codemirror_theme_rubyblue', WPEDITOR_URL . '/extensions/codemirror/themes/rubyblue.css');
+  }
+  
+  public function registerDefaultScript() {
+    wp_register_script('wpeditor', WPEDITOR_URL . '/js/wpeditor.js');
+    wp_register_script('fancybox', WPEDITOR_URL . '/extensions/fancybox/js/jquery.fancybox-1.3.4.pack.js');
+    wp_register_script('codemirror', WPEDITOR_URL . '/extensions/codemirror/js/codemirror.js');
+    wp_register_script('codemirror_php', WPEDITOR_URL . '/extensions/codemirror/js/php.js');
+    wp_register_script('codemirror_javascript', WPEDITOR_URL . '/extensions/codemirror/js/javascript.js');
+    wp_register_script('codemirror_css', WPEDITOR_URL . '/extensions/codemirror/js/css.js');
+    wp_register_script('codemirror_xml', WPEDITOR_URL . '/extensions/codemirror/js/xml.js');
+    wp_register_script('codemirror_clike', WPEDITOR_URL . '/extensions/codemirror/js/clike.js');
+    wp_register_script('codemirror_dialog', WPEDITOR_URL . '/extensions/codemirror/js/dialog.js');
+    wp_register_script('codemirror_search', WPEDITOR_URL . '/extensions/codemirror/js/search.js');
+    wp_register_script('codemirror_searchcursor', WPEDITOR_URL . '/extensions/codemirror/js/searchcursor.js');
+    //wp_register_script('codemirror_foldcode', WPEDITOR_URL . '/extensions/codemirror/js/foldcode.js');
+  }
+  
+  public static function getView($filename, $data=null) {
+    $filename = WPEDITOR_PATH . "/$filename";
+    ob_start();
+    include $filename;
+    $contents = ob_get_contents();
+    ob_end_clean();
+    return $contents;
+  }
+  
+  public static function getTableName($name){
+    return WPEditor::getTablePrefix() . $name;
+  }
+  
+  public static function getTablePrefix(){
+    global $wpdb;
+    return $wpdb->prefix . 'wpeditor_';
+  }
+  
+  public static function replacePluginEditLinks($links) {
+    $data = '';
+    if(WPEditorSetting::getValue('replace_plugin_edit_links') == 1) {
+      foreach($links as $key => $value) {
+        if($key === 'edit') {
+          $value = str_replace('plugin-editor.php?', 'plugins.php?page=wpeditor_plugin&', $value);
+        }
+        $data[$key] = $value;
+      }
+    }
+    else {
+      $data = $links;
+    }
+    return $data;
+  }
+  
+}
