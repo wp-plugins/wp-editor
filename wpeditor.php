@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: WP Editor
-Plugin URI: http://benjaminrojas.net/wpeditor
+Plugin URI: http://wpeditor.net
 Description: This plugin modifies the default behavior of the WordPress plugin and theme editors.
 Version: 1.0 BETA
 Author: Benjamin Rojas
