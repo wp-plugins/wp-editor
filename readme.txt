@@ -13,6 +13,7 @@ WP Editor is a plugin for WordPress that replaces the default plugin and theme e
 WP Editor is a plugin for WordPress that replaces the default plugin and theme editors. Using integrations with CodeMirror and FancyBox to create a feature rich environment, WP Editor completely reworks the default WordPress file editing capabilities. Using Asynchronous Javascript and XML (AJAX) to retrieve files and folders, WP Editor sets a new standard for speed and reliability in a web-based editing atmosphere.
 
 Features:
+
 * CodeMirror
 * Active Line Highlighting
 * Line Numbers
