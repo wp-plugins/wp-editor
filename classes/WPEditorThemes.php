@@ -3,34 +3,71 @@ class WPEditorThemes {
   
   public static function addThemesPage() {
     if(!current_user_can('edit_themes')) {
-    	wp_die('<p>' . __('You do not have sufficient permissions to edit templates for this site.', 'wpeditor') . '</p>');
+      wp_die('<p>' . __('You do not have sufficient permissions to edit templates for this site.', 'wpeditor') . '</p>');
     }
     
-    $themes = get_themes();
+    
+    if(WP_34) {
+      $themes = wp_get_themes();
+    }
+    else {
+      $themes = get_themes();
+    }
     
     if(empty($themes)) {
-    	wp_die('<p>' . __('There are no themes installed on this site.', 'wpeditor') . '</p>');
+      wp_die('<p>' . __('There are no themes installed on this site.', 'wpeditor') . '</p>');
     }
     
     if(isset($_REQUEST['theme'])) {
-    	$theme = stripslashes($_REQUEST['theme']);
+      $theme = stripslashes($_REQUEST['theme']);
     }
     if(isset($_REQUEST['file'])) {
       $file = stripslashes($_REQUEST['file']);
     }
     
     if(empty($theme)) {
-      $theme = get_current_theme();
+      if(WP_34) {
+        $theme = wp_get_theme();
+      }
+      else {
+        $theme = get_current_theme();
+      }
+    }
+    
+    $stylesheet = '';
+    if($theme && WP_34) {
+      $stylesheet = urldecode($theme);
+    }
+    elseif(WP_34) {
+      $stylesheet = get_stylesheet();
+    }
+    
+    if(WP_34) {
+      $wp_theme = wp_get_theme($stylesheet);
+    }
+    else {
+      $wp_theme = '';
     }
     
     if(empty($file)) {
-    	$file = basename($themes[$theme]['Stylesheet Dir']) . '/style.css';
+      if(WP_34) {
+        $file = basename($wp_theme['Stylesheet Dir']) . '/style.css';
+      }
+      else {
+        $file = basename($themes[$theme]['Stylesheet Dir']) . '/style.css';
+      }
     }
     else {
-    	$file = stripslashes($file);
+      $file = stripslashes($file);
     }
     
-    $tf = WPEditorBrowser::getFilesAndFolders((WPWINDOWS) ? str_replace("/", "\\", $themes[$theme]['Theme Root'] . '/' . $file) : $themes[$theme]['Theme Root'] . '/' . $file, 0, 'theme');
+    if(WP_34) {
+      $tf = WPEditorBrowser::getFilesAndFolders((WPWINDOWS) ? str_replace("/", "\\", $wp_theme['Theme Root'] . '/' . $file) : $wp_theme['Theme Root'] . '/' . $file, 0, 'theme');
+    }
+    else {
+      $tf = WPEditorBrowser::getFilesAndFolders((WPWINDOWS) ? str_replace("/", "\\", $themes[$theme]['Theme Root'] . '/' . $file) : $themes[$theme]['Theme Root'] . '/' . $file, 0, 'theme');
+    }
+    
     foreach($tf as $theme_file) {
       foreach($theme_file as $k => $t) {
         if($k == 'file') {
@@ -40,7 +77,12 @@ class WPEditorThemes {
     }
     
     $file = validate_file_to_edit((WPWINDOWS) ? str_replace("/", "\\", $file) : $file, $theme_files);
-    $real_file = $themes[$theme]['Theme Root'] . '/' . $file;
+    if(WP_34) {
+      $real_file = $wp_theme['Theme Root'] . '/' . $file;
+    }
+    else {
+      $real_file = $themes[$theme]['Theme Root'] . '/' . $file;
+    }
     
     if(isset($_POST['new-content']) && file_exists($real_file) && is_writeable($real_file)) {
       $new_content = stripslashes($_POST['new-content']);
@@ -49,9 +91,9 @@ class WPEditorThemes {
       }
       else {
         $f = fopen($real_file, 'w+');
-      	fwrite($f, $new_content);
-      	fclose($f);
-      	WPEditorLog::log('[' . basename(__FILE__) . ' - line ' . __LINE__ . "] just wrote to $real_file");
+        fwrite($f, $new_content);
+        fclose($f);
+        WPEditorLog::log('[' . basename(__FILE__) . ' - line ' . __LINE__ . "] just wrote to $real_file");
       }
     }
     
@@ -64,6 +106,8 @@ class WPEditorThemes {
     $data = array(
       'themes' => $themes,
       'theme' => $theme,
+      'wp_theme' => $wp_theme,
+      'stylesheet' => $stylesheet,
       'theme_files' => $theme_files,
       'real_file' => $real_file,
       'content' => $content,

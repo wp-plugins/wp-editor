@@ -10,42 +10,60 @@
   <div class="fileedit-sub">
     <div class="alignleft">
       <h3>
-        <?php echo $data['themes'][$data['theme']]['Name'] . ': '; ?>
+        <?php if(WP_34): ?>
+          <?php echo $data['wp_theme']->display('Name') . ': '; ?>
+        <?php else: ?>
+          <?php echo $data['themes'][$data['theme']]['Name'] . ': '; ?>
+        <?php endif; ?>
         <?php
-        	if(is_writeable($data['real_file'])) {
-        		echo __('Editing <span class="current_file">', 'wpeditor') . $data['file'] . __('</span>', 'wpeditor');
-        	}
-        	else {
-        		echo __('Browsing <span class="current_file">', 'wpeditor') . $data['file'] . __('</span>', 'wpeditor');
-        	}
+          if(is_writeable($data['real_file'])) {
+            echo __('Editing <span class="current_file">', 'wpeditor') . $data['file'] . __('</span>', 'wpeditor');
+          }
+          else {
+            echo __('Browsing <span class="current_file">', 'wpeditor') . $data['file'] . __('</span>', 'wpeditor');
+          }
         ?>
       </h3>
     </div>
     <div class="alignright">
-    	<form action="themes.php?page=wpeditor_themes" method="post">
-    		<strong><label for="plugin"><?php _e('Select theme to edit:', 'wpeditor'); ?></label></strong>
-    		<select name="theme" id="theme">
-          <?php
-    	      foreach($data['themes'] as $a_theme) {
-    	        $theme_name = $a_theme['Name'];
-    	        if($theme_name == $data['theme']) {
-    	          $selected = ' selected="selected"';
-    	        }
-    	        else {
-    	          $selected = '';
-    	        }
-    	        $theme_name = esc_attr($theme_name); ?>
-    	        <option value="<?php echo $theme_name; ?>" <?php echo $selected; ?>><?php echo $theme_name; ?></option>
-          <?php } ?>
-    		</select>
+      <form action="themes.php?page=wpeditor_themes" method="post">
+        <strong><label for="plugin"><?php _e('Select theme to edit:', 'wpeditor'); ?></label></strong>
+        <select name="theme" id="theme">
+          <?php if(WP_34): ?>
+            <?php
+              foreach(wp_get_themes(array('errors' => null)) as $a_stylesheet => $a_theme) {
+                if($a_theme->errors() && 'theme_no_stylesheet' == $a_theme->errors()->get_error_code()) {
+                  continue;
+                }
+                $selected = $a_stylesheet == strtolower($data['stylesheet']) ? ' selected="selected"' : '';
+                echo "\n\t" . '<option value="' . esc_attr($a_stylesheet) . '"' . $selected . '>' . $a_theme->display('Name') . '</option>';
+              }
+            ?>
+          <?php else: ?>
+            <?php
+              foreach($data['themes'] as $a_theme) {
+                $theme_name = $a_theme['Name'];
+                if($theme_name == $data['theme']) {
+                  $selected = ' selected="selected"';
+                }
+                else {
+                  $selected = '';
+                }
+                $theme_name = esc_attr($theme_name); ?>
+                <option value="<?php echo $theme_name; ?>" <?php echo $selected; ?>><?php echo $theme_name; ?></option>
+              <?php
+              }
+            ?>
+          <?php endif; ?>
+        </select>
         <input type='submit' name='submit' class="button-secondary" value="<?php _e('Select', 'wpeditor'); ?>" />
-    	</form>
+      </form>
     </div>
     <br class="clear" />
   </div>
 
   <div id="templateside">
-  	<h3><?php _e('Theme Files', 'wpeditor'); ?></h3>
+    <h3><?php _e('Theme Files', 'wpeditor'); ?></h3>
     <div id="theme-editor-files">
       <ul id="theme-folders" class="theme-folders"></ul>
     </div>
@@ -69,15 +87,15 @@
     </div>
     <?php if(is_writeable($data['real_file'])): ?>
       <p class="submit">
-      	<?php
-      		if(isset($_GET['phperror'])) {
-      			echo '<input type="hidden" name="phperror" value="1" />'; ?>
-      			<input type="submit" name="submit" class="button-primary" value="<?php _e('Update File and Attempt to Reactivate', 'wpeditor'); ?>" />
-      		<?php } else { ?>
-      			<input type="submit" name='submit' class="button-primary" value="<?php _e('Update File', 'wpeditor'); ?>" />
-      		<?php
-      		}
-      	?>
+        <?php
+          if(isset($_GET['phperror'])) {
+            echo '<input type="hidden" name="phperror" value="1" />'; ?>
+            <input type="submit" name="submit" class="button-primary" value="<?php _e('Update File and Attempt to Reactivate', 'wpeditor'); ?>" />
+          <?php } else { ?>
+            <input type="submit" name='submit' class="button-primary" value="<?php _e('Update File', 'wpeditor'); ?>" />
+          <?php
+          }
+        ?>
       </p>
     <?php else: ?>
       <p>

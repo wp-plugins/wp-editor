@@ -3,7 +3,7 @@
 Plugin Name: WP Editor
 Plugin URI: http://wpeditor.net
 Description: This plugin modifies the default behavior of the WordPress plugin and theme editors.
-Version: 1.0 BETA
+Version: 1.0.1
 Author: Benjamin Rojas
 Author URI: http://benjaminrojas.net
 Text Domain: wpeditor
@@ -31,7 +31,13 @@ if(!class_exists('WPEditor')) {
   ob_start();
   
   // Define the WP Editor version number
-  define('WPEDITOR_VERSION_NUMBER', '1.0 BETA');
+  define('WPEDITOR_VERSION_NUMBER', '1.0.1');
+  
+  $wp_34 = false;
+  if(version_compare(get_bloginfo('version'), '3.4', '>=')) {
+    $wp_34 = true;
+  }
+  define('WP_34', $wp_34);
   
   // Define the default path and URL for the WP Editor plugin
   define('WPEDITOR_PATH', plugin_dir_path( __FILE__ ));

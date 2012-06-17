@@ -211,6 +211,12 @@ li.indent {
 #plugin-editor-files .plugin-folders ul li.jpeg, #theme-editor-files .theme-folders ul li.jpeg {
   background:url('images/jpg.png') 0px 0px no-repeat;
 }
+#plugin-editor-files .plugin-folders ul li.htm, #theme-editor-files .theme-folders ul li.htm {
+  background:url('images/htm.png') 0px 0px no-repeat;
+}
+#plugin-editor-files .plugin-folders ul li.html, #theme-editor-files .theme-folders ul li.html {
+  background:url('images/html.png') 0px 0px no-repeat;
+}
 span.tiny {
   font-size:10px;
 }
