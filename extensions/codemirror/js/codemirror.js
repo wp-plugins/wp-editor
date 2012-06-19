@@ -406,12 +406,12 @@ var CodeMirror = (function() {
           reader.onload = function() {
             text[i] = reader.result;
             if (++read == n) {
-	      pos = clipPos(pos);
-	      operation(function() {
+              pos = clipPos(pos);
+              operation(function() {
                 var end = replaceRange(text.join(""), pos, pos);
                 setSelectionUser(pos, end);
               })();
-	    }
+            }
           };
           reader.readAsText(file);
         }
@@ -422,12 +422,12 @@ var CodeMirror = (function() {
         try {
           var text = e.dataTransfer.getData("Text");
           if (text) {
-	    var end = replaceRange(text, pos, pos);
-	    var curFrom = sel.from, curTo = sel.to;
-	    setSelectionUser(pos, end);
+            var end = replaceRange(text, pos, pos);
+            var curFrom = sel.from, curTo = sel.to;
+            setSelectionUser(pos, end);
             if (draggingText) replaceRange("", curFrom, curTo);
-	    focusInput();
-	  }
+            focusInput();
+          }
         }
         catch(e){}
       }

@@ -83,6 +83,16 @@ class WPEditor {
       WPEditorSetting::setValue('theme_editor_allowed_extensions', 'php~js~css~txt~htm~html~jpg~jpeg~png~gif~sql~po');
     }
     
+    // Check if the upload plugin file option has been set and set if not
+    if(!WPEditorSetting::getValue('plugin_file_upload')) {
+      WPEditorSetting::setValue('plugin_file_upload', 1);
+    }
+    
+    // Check if the upload theme file option has been set and set if not
+    if(!WPEditorSetting::getValue('theme_file_upload')) {
+      WPEditorSetting::setValue('theme_file_upload', 1);
+    }
+    
   }
   
   public function init() {
@@ -147,6 +157,9 @@ class WPEditor {
       
       // Ajax request to save files
       add_action('wp_ajax_save_files', array('WPEditorAjax', 'saveFile'));
+      
+      // Ajax request to upload files
+      add_action('wp_ajax_upload_files', array('WPEditorAjax', 'uploadFile'));
       
       // Ajax request to retrieve files and folders
       add_action('wp_ajax_ajax_folders', array('WPEditorAjax', 'ajaxFolders'));

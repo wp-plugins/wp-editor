@@ -6,57 +6,85 @@
     <div class="updated">
       <p><?php _e('<strong>This plugin is currently activated!<br />Warning:</strong> Making changes to active plugins is not recommended.  If your changes cause a fatal error, the plugin will be automatically deactivated.', 'wpeditor'); ?></p>
     </div>
-	<?php } ?>
+  <?php } ?>
   <div class="fileedit-sub">
     <div class="alignleft">
       <h3>
         <?php
-        	if(is_plugin_active($data['plugin'])) {
-        		if(is_writeable($data['real_file'])) {
-        			echo __('Editing <span class="current_file">', 'wpeditor') . $data['file'] . __('</span> (active)', 'wpeditor');
-        		}
-        		else {
-        			echo __('Browsing <span class="current_file">', 'wpeditor') . $data['file'] . __('</span> (active)', 'wpeditor');
-        	  }
-        	} else {
-        		if (is_writeable($data['real_file'])) {
-        			echo __('Editing <span class="current_file">', 'wpeditor') . $data['file'] . __('</span> (inactive)', 'wpeditor');
-        		}
-        		else {
-        			echo __('Browsing <span class="current_file">', 'wpeditor') . $data['file'] . __('</span> (inactive)', 'wpeditor');
-        	  }
-        	}
+          if(is_plugin_active($data['plugin'])) {
+            if(is_writeable($data['real_file'])) {
+              echo __('Editing <span class="current_file">', 'wpeditor') . $data['file'] . __('</span> (active)', 'wpeditor');
+            }
+            else {
+              echo __('Browsing <span class="current_file">', 'wpeditor') . $data['file'] . __('</span> (active)', 'wpeditor');
+            }
+          } else {
+            if (is_writeable($data['real_file'])) {
+              echo __('Editing <span class="current_file">', 'wpeditor') . $data['file'] . __('</span> (inactive)', 'wpeditor');
+            }
+            else {
+              echo __('Browsing <span class="current_file">', 'wpeditor') . $data['file'] . __('</span> (inactive)', 'wpeditor');
+            }
+          }
         ?>
       </h3>
     </div>
     <div class="alignright">
-    	<form action="plugins.php?page=wpeditor_plugin" method="post">
-    		<strong><label for="plugin"><?php _e('Select plugin to edit:', 'wpeditor'); ?></label></strong>
-    		<select name="plugin" id="plugin">
+      <form action="plugins.php?page=wpeditor_plugin" method="post">
+        <strong><label for="plugin"><?php _e('Select plugin to edit:', 'wpeditor'); ?></label></strong>
+        <select name="plugin" id="plugin">
           <?php
-          	foreach($data['plugins'] as $plugin_key => $a_plugin) {
-          		$plugin_name = $a_plugin['Name'];
-          		if($plugin_key == $data['plugin']) {
-          			$selected = ' selected="selected"';
-          		}
-          		else {
-          			$selected = '';
-          		}
-          		$plugin_name = esc_attr($plugin_name);
-          		$plugin_key = esc_attr($plugin_key); ?>
-          		<option value="<?php echo $plugin_key; ?>" <?php echo $selected; ?>><?php echo $plugin_name; ?></option>
-          	<?php
-          	}
+            foreach($data['plugins'] as $plugin_key => $a_plugin) {
+              $plugin_name = $a_plugin['Name'];
+              if($plugin_key == $data['plugin']) {
+                $selected = ' selected="selected"';
+              }
+              else {
+                $selected = '';
+              }
+              $plugin_name = esc_attr($plugin_name);
+              $plugin_key = esc_attr($plugin_key); ?>
+              <option value="<?php echo $plugin_key; ?>" <?php echo $selected; ?>><?php echo $plugin_name; ?></option>
+            <?php
+            }
           ?>
-    		</select>
+        </select>
         <input type='submit' name='submit' class="button-secondary" value="<?php _e('Select', 'wpeditor'); ?>" />
-    	</form>
+      </form>
     </div>
     <br class="clear" />
   </div>
 
   <div id="templateside">
-  	<h3><?php _e('Plugin Files', 'wpeditor'); ?></h3>
+    <?php if(WPEditorSetting::getValue('plugin_file_upload')): ?>
+      <h3><?php _e('Upload Files', 'wpeditor'); ?></h3>
+      <div id="plugin-upload-files">
+        <?php if(is_writeable($data['real_file'])): ?>
+          <form enctype="multipart/form-data" id="plugin_upload_form" method="POST">
+              <!-- MAX_FILE_SIZE must precede the file input field -->
+              <!--input type="hidden" name="MAX_FILE_SIZE" value="30000" /-->
+              <p class="description">
+                <?php _e('To', 'wpeditor'); ?>: <?php echo basename(dirname($data['current_plugin_root'])) . '/' . basename($data['current_plugin_root']) . '/'; ?>
+              </p>
+              <input type="hidden" name="current_plugin_root" value="<?php echo $data['current_plugin_root']; ?>" id="current_plugin_root" />
+              <input type="text" name="directory" id="file_directory" style="width:190px" placeholder="<?php _e('Optional: Sub-Directory', 'wpeditor'); ?>" />
+              <!-- Name of input element determines name in $_FILES array -->
+              <input name="file" type="file" id="file" style="width:180px" />
+              <div class="ajax-button-loader">
+                <?php submit_button(__('Upload File', 'wpeditor'), 'primary', 'submit', false); ?>
+                <div class="ajax-loader"></div>
+              </div>
+          </form>
+        <?php else: ?>
+          <p>
+            <em><?php _e('You need to make this folder writable before you can upload any files. See <a href="http://codex.wordpress.org/Changing_File_Permissions" target="_blank">the Codex</a> for more information.'); ?></em>
+          </p>
+        <?php endif; ?>
+      </div>
+      <div id="upload_message"></div>
+    <?php endif; ?>
+    
+    <h3><?php _e('Plugin Files', 'wpeditor'); ?></h3>
     <div id="plugin-editor-files">
       <ul id="plugin-folders" class="plugin-folders"></ul>
     </div>
@@ -80,15 +108,15 @@
     </div>
     <?php if(is_writeable($data['real_file'])): ?>
       <p class="submit">
-      	<?php
-      		if(isset($_GET['phperror'])) {
-      			echo '<input type="hidden" name="phperror" value="1" />'; ?>
-      			<input type="submit" name="submit" class="button-primary" value="<?php _e('Update File and Attempt to Reactivate', 'wpeditor'); ?>" />
-      		<?php } else { ?>
-      			<input type="submit" name='submit' class="button-primary" value="<?php _e('Update File', 'wpeditor'); ?>" />
-      		<?php
-      		}
-      	?>
+        <?php
+          if(isset($_GET['phperror'])) {
+            echo '<input type="hidden" name="phperror" value="1" />'; ?>
+            <input type="submit" name="submit" class="button-primary" value="<?php _e('Update File and Attempt to Reactivate', 'wpeditor'); ?>" />
+          <?php } else { ?>
+            <input type="submit" name='submit' class="button-primary" value="<?php _e('Update File', 'wpeditor'); ?>" />
+          <?php
+          }
+        ?>
       </p>
     <?php else: ?>
       <p>
@@ -97,27 +125,51 @@
     <?php endif; ?>
   </form>
   <script type="text/javascript">
-    /* <![CDATA[ */
-    jQuery(document).ready(function($){
-      $('#template_form').submit(function(){ 
-      	$('#scroll-to').val( $('#new-content').scrollTop() ); 
-      });
-      $('#new-content').scrollTop($('#scroll-to').val());
-    });
     (function($){
-      var c;
-      var url = ajaxurl;
-      var path = '<?php echo urlencode((WPWINDOWS) ? str_replace("/", "\\", $data["real_file"]) : $data["real_file"]); ?>';
-      $('#plugin-folders').folders({
-        url: url,
-        path: path,
-        encoded: 1
-      }).delegate('a','click',function() {
-        $('#plugin-folders li').removeClass('selected');
-        c = $(this).parent().addClass('selected').data('path')
-      });
+      $(document).ready(function(){
+        $('#template_form').submit(function(){ 
+          $('#scroll-to').val( $('#new-content').scrollTop() ); 
+        });
+        $('#new-content').scrollTop($('#scroll-to').val());
+        enablePluginAjaxBrowser('<?php echo urlencode((WPWINDOWS) ? str_replace("/", "\\", $data["real_file"]) : $data["real_file"]); ?>');
+        runCodeMirror('<?php echo $pathinfo["extension"]; ?>');
+        $('.ajax-loader').hide();
+        $('#plugin_upload_form').submit(function() {
+          $('.ajax-loader').show();
+          var directory = $('#file_directory').val();
+          var current_plugin_root = $('#current_plugin_root').val();
+          var data = new FormData();
+          $.each($('input[type=file]')[0].files, function(i, file) {
+            data.append('file-'+i, file);
+          });
+          data.append('action', 'upload_files');
+          data.append('current_plugin_root', current_plugin_root);
+          data.append('directory', directory);
+          $.ajax({
+            type: "POST",
+            url: ajaxurl,
+            data: data,
+            contentType: false,
+            processData: false,
+            dataType: 'json',
+            success: function(result) {
+              if(result.error[0] === 0) {
+                enablePluginAjaxBrowser('<?php echo urlencode((WPWINDOWS) ? str_replace("/", "\\", $data["real_file"]) : $data["real_file"]); ?>');
+                $('#upload_message').html('<p class="WPEditorAjaxSuccess" style="padding:5px;">' + result.success + '</p>');
+              }
+              if(result.error[0] === -2) {
+                $('#upload_message').html('<p class="WPEditorAjaxError" style="padding:5px;">' + result.error[1] + '</p>');
+              }
+              else if(result.error[0] === -1) {
+                $('#upload_message').html('<p class="WPEditorAjaxError" style="padding:5px;">' + result.error[1] + '</p>');
+              }
+              $('.ajax-loader').hide();
+            }
+          });
+          return false;
+        });
+      })
     })(jQuery);
-    runCodeMirror('<?php echo $pathinfo["extension"]; ?>');
     function runCodeMirror(extension) {
       if(extension === 'php') {
         var mode = 'application/x-httpd-php';
@@ -166,8 +218,7 @@
       });
       var hlLine = editor.setLineClass(0, activeLine);
     }
-    /* ]]> */
-  </script>
+  </script> 
 </div>
 <div class="alignright">
 </div>

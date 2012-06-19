@@ -40,6 +40,18 @@ class WPEditorAjax {
     die();
   }
   
+  public static function uploadFile() {
+    $upload = '';
+    if(isset($_POST['current_theme_root'])){
+      $upload = WPEditorBrowser::uploadThemeFiles();
+    }
+    elseif(isset($_POST['current_plugin_root'])) {
+      $upload = WPEditorBrowser::uploadPluginFiles();
+    }
+    echo json_encode($upload);
+    die();
+  }
+  
   public static function saveFile() {
     $error = '';
     try {
@@ -52,9 +64,9 @@ class WPEditorAjax {
           }
           else {
             $f = fopen($real_file, 'w+');
-          	fwrite($f, $new_content);
-          	fclose($f);
-          	WPEditorLog::log('[' . basename(__FILE__) . ' - line ' . __LINE__ . "] just wrote to $real_file");
+            fwrite($f, $new_content);
+            fclose($f);
+            WPEditorLog::log('[' . basename(__FILE__) . ' - line ' . __LINE__ . "] just wrote to $real_file");
           }
         }
       }

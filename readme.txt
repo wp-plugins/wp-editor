@@ -33,6 +33,14 @@ WP Editor is a plugin for WordPress that replaces the default plugin and theme e
 
 == Changelog ==
 
+= 1.0.2 =
+* Fixed invalid foreach statement for WP 3.4 in Theme editor
+* Fixed invalid URL for images in root directory of themes
+* Updated editor to keep line position when saving files
+* Removed tab characters in all code and replaced with spaces
+* Updated contextual help in the code editor pages
+* Added ability to upload files in Theme/Plugin Editor
+
 = 1.0.1 =
 * Updated WP Editor to work with WordPress 3.4+
 * Added HTML and HTM icons

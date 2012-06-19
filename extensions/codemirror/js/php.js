@@ -54,14 +54,14 @@
           state.curMode = phpMode;
           state.curState = state.php;
           state.curClose = /^\?>/;
-		  state.mode =  'php';
+          state.mode =  'php';
         }
         else if (style == "tag" && stream.current() == ">" && state.curState.context) {
           if (/^script$/i.test(state.curState.context.tagName)) {
             state.curMode = jsMode;
             state.curState = jsMode.startState(htmlMode.indent(state.curState, ""));
             state.curClose = /^<\/\s*script\s*>/i;
-			state.mode =  'javascript';
+            state.mode =  'javascript';
           }
           else if (/^style$/i.test(state.curState.context.tagName)) {
             state.curMode = cssMode;
@@ -76,7 +76,7 @@
         state.curMode = htmlMode;
         state.curState = state.html;
         state.curClose = null;
-		state.mode =  'html';
+        state.mode =  'html';
         return dispatch(stream, state);
       }
       else return state.curMode.token(stream, state.curState);
@@ -87,10 +87,10 @@
         var html = htmlMode.startState();
         return {html: html,
                 php: phpMode.startState(),
-                curMode:	parserConfig.startOpen ? phpMode : htmlMode,
-                curState:	parserConfig.startOpen ? phpMode.startState() : html,
-                curClose:	parserConfig.startOpen ? /^\?>/ : null,
-				mode:		parserConfig.startOpen ? 'php' : 'html'}
+                curMode:  parserConfig.startOpen ? phpMode : htmlMode,
+                curState: parserConfig.startOpen ? phpMode.startState() : html,
+                curClose: parserConfig.startOpen ? /^\?>/ : null,
+                mode:     parserConfig.startOpen ? 'php' : 'html'}
       },
 
       copyState: function(state) {

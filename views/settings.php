@@ -20,11 +20,11 @@
       <div id="settings-columns">
         <div class="settings-tabs">
           <ul>
-						<li id="settings-main-settings-tab"><a id="settings-link-main-settings" href="javascript:void(0)"><?php _e('Main Settings', 'wpeditor'); ?></a></li>
-						<li id="settings-themes-tab"><a id="settings-link-themes" href="javascript:void(0)"><?php _e('Theme Editor', 'wpeditor'); ?></a></li>
-						<li id="settings-plugins-tab"><a id="settings-link-plugins" href="javascript:void(0)"><?php _e('Plugin Editor', 'wpeditor'); ?></a></li>
-						<li id="settings-overview-tab"><a id="settings-link-overview" href="javascript:void(0)"><?php _e('Overview', 'wpeditor'); ?></a></li>
-  				</ul>
+            <li id="settings-main-settings-tab"><a id="settings-link-main-settings" href="javascript:void(0)"><?php _e('Main Settings', 'wpeditor'); ?></a></li>
+            <li id="settings-themes-tab"><a id="settings-link-themes" href="javascript:void(0)"><?php _e('Theme Editor', 'wpeditor'); ?></a></li>
+            <li id="settings-plugins-tab"><a id="settings-link-plugins" href="javascript:void(0)"><?php _e('Plugin Editor', 'wpeditor'); ?></a></li>
+            <li id="settings-overview-tab"><a id="settings-link-overview" href="javascript:void(0)"><?php _e('Overview', 'wpeditor'); ?></a></li>
+          </ul>
         </div>
         <div id="settings-loading">
           <h2><?php _e('loading...', 'wpeditor'); ?></h2>
@@ -255,6 +255,25 @@
                 </ul>
               </div>
             </div>
+            <div id="enable-theme-file-upload" class="section">
+              <div class="section-header">
+                <h3><?php _e('File Upload', 'wpeditor'); ?></h3>
+              </div>
+              <div class="section-body">
+                <ul>
+                  <li>
+                    <label for="theme_file_upload"><?php _e('Enable File Upload:', 'wpeditor'); ?></label>
+                  </li>
+                  <li class="indent">
+                    <input type="radio" name="theme_file_upload" value="1" <?php echo (WPEditorSetting::getValue('theme_file_upload') == 1) ? 'checked="checked"' : ''; ?>> <?php _e('Yes', 'wpeditor'); ?>
+                    <input type="radio" name="theme_file_upload" value="0" <?php echo (WPEditorSetting::getValue('theme_file_upload') != 1) ? 'checked="checked"' : ''; ?>> <?php _e('No', 'wpeditor'); ?>
+                  </li>
+                  <li class="indent description">
+                    <p><?php _e("This will enable a file upload option for the theme editor.<br />Default: Yes", 'wpeditor'); ?></p>
+                  </li>
+                </ul>
+              </div>
+            </div>
             <div id="save-settings">
               <ul>
                 <li>
@@ -405,6 +424,25 @@
                   </li>
                   <li class="indent description">
                     <p><?php _e("This will enable highlighting of the active line for the plugin editor.<br />Default: Yes", 'wpeditor'); ?></p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div id="enable-plugin-file-upload" class="section">
+              <div class="section-header">
+                <h3><?php _e('File Upload', 'wpeditor'); ?></h3>
+              </div>
+              <div class="section-body">
+                <ul>
+                  <li>
+                    <label for="plugin_file_upload"><?php _e('Enable File Upload:', 'wpeditor'); ?></label>
+                  </li>
+                  <li class="indent">
+                    <input type="radio" name="plugin_file_upload" value="1" <?php echo (WPEditorSetting::getValue('plugin_file_upload') == 1) ? 'checked="checked"' : ''; ?>> <?php _e('Yes', 'wpeditor'); ?>
+                    <input type="radio" name="plugin_file_upload" value="0" <?php echo (WPEditorSetting::getValue('plugin_file_upload') != 1) ? 'checked="checked"' : ''; ?>> <?php _e('No', 'wpeditor'); ?>
+                  </li>
+                  <li class="indent description">
+                    <p><?php _e("This will enable a file upload option for the plugin editor.<br />Default: Yes", 'wpeditor'); ?></p>
                   </li>
                 </ul>
               </div>

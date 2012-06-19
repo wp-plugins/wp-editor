@@ -74,17 +74,18 @@ function toggleFullscreenEditing() {
             newElement.removeClass(ajaxObject.options.open).children('ul').slideUp();
           }
           else if(!newElement.hasClass(ajaxObject.options.open) && newElement.hasClass('file')) {
-            if(newElement.data('content') != null) {
-              editor.toTextArea();
-              $('#new-content').val(newElement.data('content'));
-              $('#file').val(newElement.data('file'));
-              $('#path').val(newElement.data('path'));
-              $('#extension').val(newElement.data('extension'));
-              $('.current_file').html(newElement.data('file'));
-              console.log(newElement.data('file'))
-              runCodeMirror(newElement.data('extension'));
-            }
-            else if(checkExtension(newElement.data('extension'))) {
+            // Removed in 1.0.2 to fix issues with reloading a version that was not correct.
+            //if(newElement.data('content') != null) {
+            //  editor.toTextArea();
+            //  $('#new-content').val(newElement.data('content'));
+            //  $('#file').val(newElement.data('file'));
+            //  $('#path').val(newElement.data('path'));
+            //  $('#extension').val(newElement.data('extension'));
+            //  $('.current_file').html(newElement.data('file'));
+            //  console.log(newElement.data('file'))
+            //  runCodeMirror(newElement.data('extension'));
+            //}
+            if(checkExtension(newElement.data('extension'))) {
               $.fancybox(this);
             }
             else {
@@ -253,7 +254,7 @@ function toggleFullscreenEditing() {
     });
     
     $('.ajax-editor-update').submit(function() {
-      editor.toTextArea();
+      editor.save(); // Implemented .save() in 1.0.2 instead of .toTextArea() to fix issues with not maintaining line numbers
       var data = {
         action: 'save_files',
         real_file: $('#path').val(),
@@ -263,19 +264,22 @@ function toggleFullscreenEditing() {
         extension: $('#extension').val(),
         _success: $('#_success').val()
       }
-      runCodeMirror($('#extension').val());
+      // Removed in 1.0.2
+      //runCodeMirror($('#extension').val());
       $.ajax({
           type: "POST",
           url: ajaxurl,
           data: data,
           dataType: 'json',
           success: function(result) {
-            editor.toTextArea();
+            // Removed in 1.0.2
+            //editor.save();
             $('#save-result').html("<div id='save-message' class='" + result[0] + "'></div>");
             $('#save-message').append(result[1]);
             $('#save-result').fadeIn(1000).delay(3000).fadeOut(300);
             changeReset();
-            runCodeMirror(result[2]);
+            // Removed in 1.0.2
+            //runCodeMirror(result[2]);
           }
       });
       return false;
@@ -287,8 +291,34 @@ function toggleFullscreenEditing() {
     });
   });
 })(jQuery);
+function enableThemeAjaxBrowser(path) {
+  $jq = jQuery.noConflict();
+  var c;
+  var url = ajaxurl;
+  $jq('#theme-folders').folders({
+    url: url,
+    path: path,
+    encoded: 1
+  }).delegate('a','click',function() {
+    $jq('#theme-folders li').removeClass('selected');
+    c = $jq(this).parent().addClass('selected').data('path')
+  });
+}
+function enablePluginAjaxBrowser(path) {
+  $jq = jQuery.noConflict();
+  var c;
+  var url = ajaxurl;
+  $jq('#plugin-folders').folders({
+    url: url,
+    path: path,
+    encoded: 1
+  }).delegate('a','click',function() {
+    $jq('#plugin-folders li').removeClass('selected');
+    c = $jq(this).parent().addClass('selected').data('path')
+  });
+}
 function getFormData(formId) {
-	$jq = jQuery.noConflict();
+  $jq = jQuery.noConflict();
   var theForm = $jq('#' + formId);
   var str = '';
   $jq('input:not([type=checkbox], :radio), input[type=checkbox]:checked, input:radio:checked, select, textarea', theForm).each(
@@ -303,13 +333,13 @@ function getFormData(formId) {
 function settingsTabs(tab) {
   $jq = jQuery.noConflict();
   $jq('#settings-' + tab).show();
-	$jq('#settings-loading').hide();
-	$jq('#settings-' + tab + '-tab a').addClass('active');  	  
+  $jq('#settings-loading').hide();
+  $jq('#settings-' + tab + '-tab a').addClass('active');      
   $jq('div.settings-tabs ul li a').click(function(){
     var thisClass = $jq(this).attr('id').replace('settings-link-','');
-	  $jq('div.settings-body').hide();
-	  $jq('#settings-' + thisClass).fadeIn(300);
-	  $jq('div.settings-tabs ul li a').removeClass('active');
-	  $jq('#settings-link-' + thisClass).addClass('active');
-	});
+    $jq('div.settings-body').hide();
+    $jq('#settings-' + thisClass).fadeIn(300);
+    $jq('div.settings-tabs ul li a').removeClass('active');
+    $jq('#settings-link-' + thisClass).addClass('active');
+  });
 }

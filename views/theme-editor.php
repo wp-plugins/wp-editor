@@ -6,7 +6,7 @@
     <div class="updated">
       <p><?php _e('<strong>This plugin is currently activated!<br />Warning:</strong> Making changes to active plugins is not recommended.  If your changes cause a fatal error, the plugin will be automatically deactivated.', 'wpeditor'); ?></p>
     </div>
-	<?php } ?>
+  <?php } ?>
   <div class="fileedit-sub">
     <div class="alignleft">
       <h3>
@@ -61,8 +61,36 @@
     </div>
     <br class="clear" />
   </div>
-
+  
   <div id="templateside">
+    <?php if(WPEditorSetting::getValue('theme_file_upload')): ?>
+      <h3><?php _e('Upload Files', 'wpeditor'); ?></h3>
+      <div id="theme-upload-files">
+        <?php if(is_writeable($data['real_file'])): ?>
+          <form enctype="multipart/form-data" id="theme_upload_form" method="POST">
+              <!-- MAX_FILE_SIZE must precede the file input field -->
+              <!--input type="hidden" name="MAX_FILE_SIZE" value="30000" /-->
+              <p class="description">
+                <?php _e('To', 'wpeditor'); ?>: <?php echo basename(dirname($data['current_theme_root'])) . '/' . basename($data['current_theme_root']) . '/'; ?>
+              </p>
+              <input type="hidden" name="current_theme_root" value="<?php echo $data['current_theme_root']; ?>" id="current_theme_root" />
+              <input type="text" name="directory" id="file_directory" style="width:190px" placeholder="<?php _e('Optional: Sub-Directory', 'wpeditor'); ?>" />
+              <!-- Name of input element determines name in $_FILES array -->
+              <input name="file" type="file" id="file" style="width:180px" />
+              <div class="ajax-button-loader">
+                <?php submit_button(__('Upload File', 'wpeditor'), 'primary', 'submit', false); ?>
+                <div class="ajax-loader"></div>
+              </div>
+          </form>
+        <?php else: ?>
+          <p>
+            <em><?php _e('You need to make this folder writable before you can upload any files. See <a href="http://codex.wordpress.org/Changing_File_Permissions" target="_blank">the Codex</a> for more information.'); ?></em>
+          </p>
+        <?php endif; ?>
+      </div>
+      <div id="upload_message"></div>
+    <?php endif; ?>
+    
     <h3><?php _e('Theme Files', 'wpeditor'); ?></h3>
     <div id="theme-editor-files">
       <ul id="theme-folders" class="theme-folders"></ul>
@@ -104,27 +132,52 @@
     <?php endif; ?>
   </form>
   <script type="text/javascript">
-    /* <![CDATA[ */
-    jQuery(document).ready(function($){
-      $('#template_form').submit(function(){ 
-      	$('#scroll-to').val( $('#new-content').scrollTop() ); 
-      });
-      $('#new-content').scrollTop($('#scroll-to').val());
-    });
     (function($){
-      var c;
-      var url = ajaxurl;
-      var path = '<?php echo urlencode((WPWINDOWS) ? str_replace("/", "\\", $data["real_file"]) : $data["real_file"]); ?>';
-      $('#theme-folders').folders({
-        url: url,
-        path: path,
-        encoded: 1
-      }).delegate('a','click',function() {
-        $('#theme-folders li').removeClass('selected');
-        c = $(this).parent().addClass('selected').data('path')
-      });
+      $(document).ready(function(){
+        $('#template_form').submit(function(){ 
+          $('#scroll-to').val( $('#new-content').scrollTop() ); 
+        });
+        $('#new-content').scrollTop($('#scroll-to').val());
+        enableThemeAjaxBrowser('<?php echo urlencode((WPWINDOWS) ? str_replace("/", "\\", $data["real_file"]) : $data["real_file"]); ?>');
+        runCodeMirror('<?php echo $pathinfo["extension"]; ?>');
+        $('.ajax-loader').hide();
+        $('#theme_upload_form').submit(function() {
+          $('.ajax-loader').show();
+          var directory = $('#file_directory').val();
+          var current_theme_root = $('#current_theme_root').val();
+          var data = new FormData();
+          $.each($('input[type=file]')[0].files, function(i, file) {
+            data.append('file-'+i, file);
+          });
+          data.append('action', 'upload_files');
+          data.append('current_theme_root', current_theme_root);
+          data.append('directory', directory);
+          $.ajax({
+            type: "POST",
+            url: ajaxurl,
+            data: data,
+            contentType: false,
+            processData: false,
+            dataType: 'json',
+            success: function(result) {
+              if(result.error[0] === 0) {
+                enableThemeAjaxBrowser('<?php echo urlencode((WPWINDOWS) ? str_replace("/", "\\", $data["real_file"]) : $data["real_file"]); ?>');
+                $('#upload_message').html('<p class="WPEditorAjaxSuccess" style="padding:5px;">' + result.success + '</p>');
+              }
+              if(result.error[0] === -2) {
+                $('#upload_message').html('<p class="WPEditorAjaxError" style="padding:5px;">' + result.error[1] + '</p>');
+              }
+              else if(result.error[0] === -1) {
+                $('#upload_message').html('<p class="WPEditorAjaxError" style="padding:5px;">' + result.error[1] + '</p>');
+              }
+              $('.ajax-loader').hide();
+            }
+          });
+          return false;
+        });
+        
+      })
     })(jQuery);
-    runCodeMirror('<?php echo $pathinfo["extension"]; ?>');
     function runCodeMirror(extension) {
       if(extension === 'php') {
         var mode = 'application/x-httpd-php';
@@ -173,8 +226,7 @@
       });
       var hlLine = editor.setLineClass(0, activeLine);
     }
-    /* ]]> */
-  </script>
+  </script> 
 </div>
 <div class="alignright">
 </div>

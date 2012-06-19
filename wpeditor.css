@@ -139,36 +139,47 @@ li.indent {
   padding-left:10px;
 }
 #plugin-editor-files .plugin-folders ul, #theme-editor-files .theme-folders ul {
-	margin:0 0 0 -10px;
-	padding:0px;
-	font-size:13px;
+  margin:0 0 0 -10px;
+  padding:0px;
+  font-size:13px;
 }
 #plugin-editor-files .plugin-folders ul li, #theme-editor-files .theme-folders ul li {
-	list-style:none;
-	margin:0px;
-	padding-left:20px;
-	white-space:nowrap;
-	line-height:18px;
+  list-style:none;
+  margin:0px;
+  padding-left:20px;
+  white-space:nowrap;
+  line-height:18px;
 }
 #plugin-editor-files .plugin-folders ul a, #theme-editor-files .theme-folders ul a {
-	display:block;
-	padding:0 2px;
-	-moz-border-radius:3px;
-	-webkit-border-radius:3px;
-	border-radius:3px;	
-	color:#333;
-	text-decoration:none;
+  display:block;
+  padding:0 2px;
+  -moz-border-radius:3px;
+  -webkit-border-radius:3px;
+  border-radius:3px;  
+  color:#333;
+  text-decoration:none;
 }
 #plugin-editor-files .plugin-folders ul a:hover, #plugin-editor-files .plugin-folders ul .selected > a:hover, #theme-editor-files .theme-folders ul a:hover, #theme-editor-files .theme-folders ul .selected > a:hover { 
   background:#DDD; 
 }
 
 #plugin-editor-files .plugin-folders ul .selected > a, #theme-editor-files .theme-folders ul .selected > a {
-	color:#21759B;
-	font-weight:bold;
-	background:#EDEDED;
+  color:#21759B;
+  font-weight:bold;
+  background:#EDEDED;
 }
-
+.ajax-button-loader {
+  margin:5px 0;
+  padding:5px;
+}
+.ajax-loader {
+  background:url('images/loader.gif') 0px 0px no-repeat;
+  height:16px;
+  width:16px;
+  position:relative;
+  top:4px;
+  display:inline-block;
+}
 #plugin-editor-files .plugin-folders ul li.folder, #theme-editor-files .theme-folders ul li.folder { 
   background:url('images/folder.png') 0px 0px no-repeat;
 }
@@ -261,19 +272,19 @@ span.tiny {
   margin:2px;
 }
 a.donate, a.support {
-	font-family:"Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size: 14px;
-	font-weight:bold;
-	color: #ffffff;
-	text-decoration:none;
-	padding:5px 30px;
-	background:-moz-linear-gradient(top, #a10e0e 0%, #600606);
-	background:-webkit-gradient(linear, left top, left bottom, from(#a10e0e), to(#600606));
-	border-radius:3px;
-	-moz-border-radius:3px;
-	-webkit-border-radius:3px;
-	border:1px solid #500a0a;
-	-moz-box-shadow:0px 1px 3px rgba(000,000,000,0.5);
-	-webkit-box-shadow:0px 1px 3px rgba(000,000,000,0.5);
-	text-shadow:1px 1px 2px rgba(000,000,000,.8);
+  font-family:"Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight:bold;
+  color: #ffffff;
+  text-decoration:none;
+  padding:5px 30px;
+  background:-moz-linear-gradient(top, #a10e0e 0%, #600606);
+  background:-webkit-gradient(linear, left top, left bottom, from(#a10e0e), to(#600606));
+  border-radius:3px;
+  -moz-border-radius:3px;
+  -webkit-border-radius:3px;
+  border:1px solid #500a0a;
+  -moz-box-shadow:0px 1px 3px rgba(000,000,000,0.5);
+  -webkit-box-shadow:0px 1px 3px rgba(000,000,000,0.5);
+  text-shadow:1px 1px 2px rgba(000,000,000,.8);
 }
