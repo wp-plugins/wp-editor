@@ -83,7 +83,7 @@ class WPEditorThemes {
       $current_theme_root = $wp_theme['Theme Root'] . '/' . dirname($file) . '/';
     }
     else {
-      $current_theme_root = $themes[$theme]['Theme Root'] . '/' . dirname($file);
+      $current_theme_root = $themes[$theme]['Theme Root'] . '/' . dirname($file) . '/';
     }
     $real_file = $current_theme_root . basename($file);
         
