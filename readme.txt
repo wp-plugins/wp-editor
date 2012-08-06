@@ -3,8 +3,8 @@ Contributors: benjaminprojas
 Donate link: http://wpeditor.net/
 Tags: plugin editor, theme editor, codemirror, plugins, themes, editor, fancybox
 Requires at least: 3.0
-Tested up to: 3.3.1
-Stable tag: 1.0 BETA
+Tested up to: 3.4.1
+Stable tag: 1.0.3
 
 WP Editor is a plugin for WordPress that replaces the default plugin and theme editors.
 
