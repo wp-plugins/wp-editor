@@ -36,7 +36,7 @@ WP Editor is a plugin for WordPress that replaces the default plugin and theme e
 = 1.0.3 =
 * Updated CSS for theme/plugin editor
 * Updated default theme/plugin editor font
-* Fixed issue with non 3.4 installations of WordPress
+* Fixed issue with theme editor in non 3.4 installations of WordPress
 
 = 1.0.2 =
 * Fixed invalid foreach statement for WP 3.4 in Theme editor
