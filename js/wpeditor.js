@@ -46,7 +46,7 @@ function toggleFullscreenEditing() {
     }
     editorDiv.addClass('CodeMirror-fullscreen');
     editorDiv.height('100%');
-    $jq('.CodeMirror-scroll').height('100%');
+    $jq('.CodeMirror-scroll').height(editorDiv.height() - 30);
     editorDiv.width('100%');
     editor.refresh();
   }

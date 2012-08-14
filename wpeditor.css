@@ -235,6 +235,12 @@ span.tiny {
   height:450px;
   width:97%;
 }
+.wp-editor-container .CodeMirror {
+  width:100% !important;
+}
+.wp-editor-container .CodeMirror-scroll {
+  border:none;
+}
 .CodeMirror-scroll {
   height:450px;
 }
@@ -252,7 +258,7 @@ span.tiny {
   background:#A8F !important;
 }
 .activeline-monokai {
-  background:#FFE792 !important;
+  background:#00F !important;
 }
 .activeline-rubyblue {
   background:#00F !important;

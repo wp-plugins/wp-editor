@@ -202,8 +202,10 @@
         <?php
         if(WPEditorSetting::getValue('enable_plugin_line_numbers')) { ?>
           lineNumbers: true,
+        <?php } 
+        if(WPEditorSetting::getValue('enable_plugin_line_wrapping')) { ?>
+          lineWrapping: true,
         <?php } ?>
-        lineWrapping: true, // set line wrapping here
         onCursorActivity: function() {
           editor.setLineClass(hlLine, null);
           hlLine = editor.setLineClass(editor.getCursor().line, activeLine);

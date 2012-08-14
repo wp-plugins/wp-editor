@@ -23,6 +23,7 @@
             <li id="settings-main-settings-tab"><a id="settings-link-main-settings" href="javascript:void(0)"><?php _e('Main Settings', 'wpeditor'); ?></a></li>
             <li id="settings-themes-tab"><a id="settings-link-themes" href="javascript:void(0)"><?php _e('Theme Editor', 'wpeditor'); ?></a></li>
             <li id="settings-plugins-tab"><a id="settings-link-plugins" href="javascript:void(0)"><?php _e('Plugin Editor', 'wpeditor'); ?></a></li>
+            <li id="settings-posts-tab"><a id="settings-link-posts" href="javascript:void(0)"><?php _e('Post Editor', 'wpeditor'); ?></a></li>
             <li id="settings-overview-tab"><a id="settings-link-overview" href="javascript:void(0)"><?php _e('Overview', 'wpeditor'); ?></a></li>
           </ul>
         </div>
@@ -443,6 +444,127 @@
                   </li>
                   <li class="indent description">
                     <p><?php _e("This will enable a file upload option for the plugin editor.<br />Default: Yes", 'wpeditor'); ?></p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div id="save-settings">
+              <ul>
+                <li>
+                  <input type='submit' name='submit' class="button-primary" value="<?php _e('Save Settings', 'wpeditor'); ?>" />
+                </li>
+              </ul>
+            </div>
+          </form>
+        </div>
+        <div id="settings-posts" class="settings-body">
+          <form action="" method="post" class="ajax-settings-form" id="post-settings-form">
+            <input type="hidden" name="action" value="save_wpeditor_settings" />
+            <input type="hidden" name="_success" value="Your post editor settings have been saved." />
+            <input type="hidden" name="_tab" value="posts" />
+            <div id="enable-post-editor" class="section">
+              <div class="section-header">
+                <h3><?php _e('Enable Post Editor', 'wpeditor'); ?></h3>
+              </div>
+              <div class="section-body">
+                <ul>
+                  <li>
+                    <label for="enable_post_editor"><?php _e('Enable the Posts Editor:', 'wpeditor'); ?></label>
+                  </li>
+                  <li class="indent">
+                    <input type="radio" name="enable_post_editor" value="1" <?php echo (WPEditorSetting::getValue('enable_post_editor') == 1) ? 'checked="checked"' : ''; ?>> <?php _e('Yes', 'wpeditor'); ?>
+                    <input type="radio" name="enable_post_editor" value="0" <?php echo (WPEditorSetting::getValue('enable_post_editor') != 1) ? 'checked="checked"' : ''; ?>> <?php _e('No', 'wpeditor'); ?>
+                  </li>
+                  <li class="indent description">
+                    <p><?php _e("This will enable/disable the post editor.<br />Default: Yes", 'wpeditor'); ?></p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div id="post-editor-theme" class="section">
+              <div class="section-header">
+                <h3><?php _e('Editor Theme', 'wpeditor'); ?></h3>
+              </div>
+              <div class="section-body">
+                <ul>
+                  <li>
+                    <label for="post_editor_theme"><?php _e('Theme:', 'wpeditor'); ?></label>
+                    <select id="post_editor_theme" name="post_editor_theme">
+                      <?php
+                      $theme = 'default';
+                      if(WPEditorSetting::getValue('post_editor_theme')) {
+                        $theme = WPEditorSetting::getValue('post_editor_theme');
+                      }
+                      ?>
+                      <option value="default" <?php echo ($theme == 'default') ? 'selected="selected"' : '' ?>><?php _e('Default', 'wpeditor'); ?></option>
+                      <option value="cobalt" <?php echo ($theme == 'cobalt') ? 'selected="selected"' : '' ?>><?php _e('Cobalt', 'wpeditor'); ?></option>
+                      <option value="eclipse" <?php echo ($theme == 'eclipse') ? 'selected="selected"' : '' ?>><?php _e('Eclipse', 'wpeditor'); ?></option>
+                      <option value="elegant" <?php echo ($theme == 'elegant') ? 'selected="selected"' : '' ?>><?php _e('Elegant', 'wpeditor'); ?></option>
+                      <option value="monokai" <?php echo ($theme == 'monokai') ? 'selected="selected"' : '' ?>><?php _e('Monokai', 'wpeditor'); ?></option>
+                      <option value="neat" <?php echo ($theme == 'neat') ? 'selected="selected"' : '' ?>><?php _e('Neat', 'wpeditor'); ?></option>
+                      <option value="night" <?php echo ($theme == 'night') ? 'selected="selected"' : '' ?>><?php _e('Night', 'wpeditor'); ?></option>
+                      <option value="rubyblue" <?php echo ($theme == 'rubyblue') ? 'selected="selected"' : '' ?>><?php _e('Ruby Blue', 'wpeditor'); ?></option>
+                    </select>
+                  </li>
+                  <li class="indent description">
+                    <p><?php _e("This allows you to select the theme for the post editor.<br />Default: Default", 'wpeditor'); ?></p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div id="enable-post-line-numbers" class="section">
+              <div class="section-header">
+                <h3><?php _e('Line Numbers', 'wpeditor'); ?></h3>
+              </div>
+              <div class="section-body">
+                <ul>
+                  <li>
+                    <label for="enable_post_line_numbers"><?php _e('Enable Line Numbers:', 'wpeditor'); ?></label>
+                  </li>
+                  <li class="indent">
+                    <input type="radio" name="enable_post_line_numbers" value="1" <?php echo (WPEditorSetting::getValue('enable_post_line_numbers') == 1) ? 'checked="checked"' : ''; ?>> <?php _e('Yes', 'wpeditor'); ?>
+                    <input type="radio" name="enable_post_line_numbers" value="0" <?php echo (WPEditorSetting::getValue('enable_post_line_numbers') != 1) ? 'checked="checked"' : ''; ?>> <?php _e('No', 'wpeditor'); ?>
+                  </li>
+                  <li class="indent description">
+                    <p><?php _e("This will enable line numbers for the post editor.<br />Default: Yes", 'wpeditor'); ?></p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div id="enable-post-line-wrapping" class="section">
+              <div class="section-header">
+                <h3><?php _e('Line Wrapping', 'wpeditor'); ?></h3>
+              </div>
+              <div class="section-body">
+                <ul>
+                  <li>
+                    <label for="enable_post_line_wrapping"><?php _e('Enable Line Wrapping:', 'wpeditor'); ?></label>
+                  </li>
+                  <li class="indent">
+                    <input type="radio" name="enable_post_line_wrapping" value="1" <?php echo (WPEditorSetting::getValue('enable_post_line_wrapping') == 1) ? 'checked="checked"' : ''; ?>> <?php _e('Yes', 'wpeditor'); ?>
+                    <input type="radio" name="enable_post_line_wrapping" value="0" <?php echo (WPEditorSetting::getValue('enable_post_line_wrapping') != 1) ? 'checked="checked"' : ''; ?>> <?php _e('No', 'wpeditor'); ?>
+                  </li>
+                  <li class="indent description">
+                    <p><?php _e("This will enable line wrapping for the post editor.<br />Default: Yes", 'wpeditor'); ?></p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div id="enable-post-active-line" class="section">
+              <div class="section-header">
+                <h3><?php _e('Active Line Highlighting', 'wpeditor'); ?></h3>
+              </div>
+              <div class="section-body">
+                <ul>
+                  <li>
+                    <label for="enable_post_active_line"><?php _e('Highlight Active Line:', 'wpeditor'); ?></label>
+                  </li>
+                  <li class="indent">
+                    <input type="radio" name="enable_post_active_line" value="1" <?php echo (WPEditorSetting::getValue('enable_post_active_line') == 1) ? 'checked="checked"' : ''; ?>> <?php _e('Yes', 'wpeditor'); ?>
+                    <input type="radio" name="enable_post_active_line" value="0" <?php echo (WPEditorSetting::getValue('enable_post_active_line') != 1) ? 'checked="checked"' : ''; ?>> <?php _e('No', 'wpeditor'); ?>
+                  </li>
+                  <li class="indent description">
+                    <p><?php _e("This will enable highlighting of the active line for the post editor.<br />Default: Yes", 'wpeditor'); ?></p>
                   </li>
                 </ul>
               </div>

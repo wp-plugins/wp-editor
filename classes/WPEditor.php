@@ -30,6 +30,11 @@ class WPEditor {
     // Set the database to upgrade instead of first time install
     WPEditorSetting::setValue('upgrade', 1);
     
+    // Check if the post editor has been enabled and enable if not
+    if(!WPEditorSetting::getValue('enable_post_editor')) {
+      WPEditorSetting::setValue('enable_post_editor', 1);
+    }
+    
     // Check if the plugin and theme editors have been hidden before and hide them if not
     if(!WPEditorSetting::getValue('hide_default_plugin_editor')) {
       WPEditorSetting::setValue('hide_default_plugin_editor', 1);
@@ -53,6 +58,11 @@ class WPEditor {
       WPEditorSetting::setValue('enable_theme_line_numbers', 1);
     }
     
+    // Check if the post line numbers have been disabled and enable if not
+    if(!WPEditorSetting::getValue('enable_post_line_numbers')) {
+      WPEditorSetting::setValue('enable_post_line_numbers', 1);
+    }
+    
     // Check if plugin line wrapping has been disabled and enable if not
     if(!WPEditorSetting::getValue('enable_plugin_line_wrapping')) {
       WPEditorSetting::setValue('enable_plugin_line_wrapping', 1);
@@ -63,6 +73,11 @@ class WPEditor {
       WPEditorSetting::setValue('enable_theme_line_wrapping', 1);
     }
     
+    // Check if post line wrapping has been disabled and enable if not
+    if(!WPEditorSetting::getValue('enable_post_line_wrapping')) {
+      WPEditorSetting::setValue('enable_post_line_wrapping', 1);
+    }
+    
     // Check if plugin active line highlighting has been disabled and enable if not
     if(!WPEditorSetting::getValue('enable_plugin_active_line')) {
       WPEditorSetting::setValue('enable_plugin_active_line', 1);
@@ -71,6 +86,11 @@ class WPEditor {
     // Check if theme active line highlighting has been disabled and enable if not
     if(!WPEditorSetting::getValue('enable_theme_active_line')) {
       WPEditorSetting::setValue('enable_theme_active_line', 1);
+    }
+    
+    // Check if post active line highlighting has been disabled and enable if not
+    if(!WPEditorSetting::getValue('enable_post_active_line')) {
+      WPEditorSetting::setValue('enable_post_active_line', 1);
     }
     
     // Check if the default allowed extensions for the plugin editor have been set and set if not
@@ -167,6 +187,8 @@ class WPEditor {
       // Replace default plugin edit links
       add_filter('plugin_action_links', array($this, 'replacePluginEditLinks'),9,1);
       
+      add_filter('the_editor', array('WPEditorPosts', 'addPostsJquery'));
+      
     }
   }
   
@@ -177,36 +199,32 @@ class WPEditor {
     require_once(WPEDITOR_PATH . 'classes/WPEditorException.php');
     require_once(WPEDITOR_PATH . 'classes/WPEditorLog.php');
     require_once(WPEDITOR_PATH . 'classes/WPEditorPlugins.php');
+    require_once(WPEDITOR_PATH . 'classes/WPEditorPosts.php');
     require_once(WPEDITOR_PATH . 'classes/WPEditorSetting.php');
     require_once(WPEDITOR_PATH . 'classes/WPEditorThemes.php');
   }
   
   public function registerDefaultStylesheet() {
-    wp_register_style('wpeditor', WPEDITOR_URL . '/wpeditor.css');
-    wp_register_style('fancybox', WPEDITOR_URL . '/extensions/fancybox/jquery.fancybox-1.3.4.css');
-    wp_register_style('codemirror', WPEDITOR_URL . '/extensions/codemirror/codemirror.css');
-    wp_register_style('codemirror_dialog', WPEDITOR_URL . '/extensions/codemirror/dialog.css');
-    wp_register_style('codemirror_theme_cobalt', WPEDITOR_URL . '/extensions/codemirror/themes/cobalt.css');
-    wp_register_style('codemirror_theme_eclipse', WPEDITOR_URL . '/extensions/codemirror/themes/eclipse.css');
-    wp_register_style('codemirror_theme_elegant', WPEDITOR_URL . '/extensions/codemirror/themes/elegant.css');
-    wp_register_style('codemirror_theme_monokai', WPEDITOR_URL . '/extensions/codemirror/themes/monokai.css');
-    wp_register_style('codemirror_theme_neat', WPEDITOR_URL . '/extensions/codemirror/themes/neat.css');
-    wp_register_style('codemirror_theme_night', WPEDITOR_URL . '/extensions/codemirror/themes/night.css');
-    wp_register_style('codemirror_theme_rubyblue', WPEDITOR_URL . '/extensions/codemirror/themes/rubyblue.css');
+    wp_register_style('wpeditor', WPEDITOR_URL . '/wpeditor.css', false, WPEDITOR_VERSION_NUMBER);
+    wp_register_style('fancybox', WPEDITOR_URL . '/extensions/fancybox/jquery.fancybox-1.3.4.css', false, WPEDITOR_VERSION_NUMBER);
+    wp_register_style('codemirror', WPEDITOR_URL . '/extensions/codemirror/codemirror.css', false, WPEDITOR_VERSION_NUMBER);
+    wp_register_style('codemirror_dialog', WPEDITOR_URL . '/extensions/codemirror/dialog.css', false, WPEDITOR_VERSION_NUMBER);
+    wp_register_style('codemirror_themes', WPEDITOR_URL . '/extensions/codemirror/theme/theme.css', false, WPEDITOR_VERSION_NUMBER);
   }
   
   public function registerDefaultScript() {
-    wp_register_script('wpeditor', WPEDITOR_URL . '/js/wpeditor.js');
-    wp_register_script('fancybox', WPEDITOR_URL . '/extensions/fancybox/js/jquery.fancybox-1.3.4.pack.js');
-    wp_register_script('codemirror', WPEDITOR_URL . '/extensions/codemirror/js/codemirror.js');
-    wp_register_script('codemirror_php', WPEDITOR_URL . '/extensions/codemirror/js/php.js');
-    wp_register_script('codemirror_javascript', WPEDITOR_URL . '/extensions/codemirror/js/javascript.js');
-    wp_register_script('codemirror_css', WPEDITOR_URL . '/extensions/codemirror/js/css.js');
-    wp_register_script('codemirror_xml', WPEDITOR_URL . '/extensions/codemirror/js/xml.js');
-    wp_register_script('codemirror_clike', WPEDITOR_URL . '/extensions/codemirror/js/clike.js');
-    wp_register_script('codemirror_dialog', WPEDITOR_URL . '/extensions/codemirror/js/dialog.js');
-    wp_register_script('codemirror_search', WPEDITOR_URL . '/extensions/codemirror/js/search.js');
-    wp_register_script('codemirror_searchcursor', WPEDITOR_URL . '/extensions/codemirror/js/searchcursor.js');
+    wp_register_script('wpeditor', WPEDITOR_URL . '/js/wpeditor.js', false, WPEDITOR_VERSION_NUMBER);
+    wp_register_script('wp-editor-posts-jquery', WPEDITOR_URL . '/js/posts-jquery.js', false, WPEDITOR_VERSION_NUMBER, true);
+    wp_register_script('fancybox', WPEDITOR_URL . '/extensions/fancybox/js/jquery.fancybox-1.3.4.pack.js', false, WPEDITOR_VERSION_NUMBER);
+    wp_register_script('codemirror', WPEDITOR_URL . '/extensions/codemirror/js/codemirror.js', false, WPEDITOR_VERSION_NUMBER);
+    wp_register_script('codemirror_php', WPEDITOR_URL . '/extensions/codemirror/js/php.js', false, WPEDITOR_VERSION_NUMBER);
+    wp_register_script('codemirror_javascript', WPEDITOR_URL . '/extensions/codemirror/js/javascript.js', false, WPEDITOR_VERSION_NUMBER);
+    wp_register_script('codemirror_css', WPEDITOR_URL . '/extensions/codemirror/js/css.js', false, WPEDITOR_VERSION_NUMBER);
+    wp_register_script('codemirror_xml', WPEDITOR_URL . '/extensions/codemirror/js/xml.js', false, WPEDITOR_VERSION_NUMBER);
+    wp_register_script('codemirror_clike', WPEDITOR_URL . '/extensions/codemirror/js/clike.js', false, WPEDITOR_VERSION_NUMBER);
+    wp_register_script('codemirror_dialog', WPEDITOR_URL . '/extensions/codemirror/js/dialog.js', false, WPEDITOR_VERSION_NUMBER);
+    wp_register_script('codemirror_search', WPEDITOR_URL . '/extensions/codemirror/js/search.js', false, WPEDITOR_VERSION_NUMBER);
+    wp_register_script('codemirror_searchcursor', WPEDITOR_URL . '/extensions/codemirror/js/searchcursor.js', false, WPEDITOR_VERSION_NUMBER);
     //wp_register_script('codemirror_foldcode', WPEDITOR_URL . '/extensions/codemirror/js/foldcode.js');
   }
   

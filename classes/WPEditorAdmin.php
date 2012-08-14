@@ -48,13 +48,7 @@ class WPEditorAdmin {
     wp_enqueue_script('fancybox');
     wp_enqueue_style('codemirror');
     wp_enqueue_style('codemirror_dialog');
-    wp_enqueue_style('codemirror_theme_cobalt');
-    wp_enqueue_style('codemirror_theme_eclipse');
-    wp_enqueue_style('codemirror_theme_elegant');
-    wp_enqueue_style('codemirror_theme_monokai');
-    wp_enqueue_style('codemirror_theme_neat');
-    wp_enqueue_style('codemirror_theme_night');
-    wp_enqueue_style('codemirror_theme_rubyblue');
+    wp_enqueue_style('codemirror_themes');
     wp_enqueue_script('codemirror');
     wp_enqueue_script('codemirror_php');
     wp_enqueue_script('codemirror_javascript');

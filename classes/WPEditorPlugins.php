@@ -30,8 +30,8 @@ class WPEditorPlugins {
     }
     else {
       $file = stripslashes($file);
+      $plugin = $file;
     }
-    
     $pf = WPEditorBrowser::getFilesAndFolders((WPWINDOWS) ? str_replace("/", "\\", WP_PLUGIN_DIR . '/' . $file) : WP_PLUGIN_DIR . '/' . $file, 0, 'plugin');
     foreach($pf as $plugin_file) {
       foreach($plugin_file as $k => $p) {

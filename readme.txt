@@ -33,6 +33,14 @@ WP Editor is a plugin for WordPress that replaces the default plugin and theme e
 
 == Changelog ==
 
+= 1.1 = 
+* Added syntax highlighter for page/post editor
+* Added in monospace font for default theme/plugin/post editor
+* Updated Edit links in plugins page to work with WP 3.4 updates
+* Updated CSS themes to limit number of resources loaded
+* Updated CSS highlighting for Ruby Blue and Monokai themes
+* Fixed theme and plugin editors to allow disabling of line wrapping
+
 = 1.0.3 =
 * Updated CSS for theme/plugin editor
 * Updated default theme/plugin editor font
