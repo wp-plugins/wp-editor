@@ -1,16 +1,16 @@
 === WP Editor ===
 Contributors: benjaminprojas
 Donate link: http://wpeditor.net/
-Tags: plugin editor, theme editor, codemirror, plugins, themes, editor, fancybox
+Tags: plugin editor, theme editor, page editor, post editor, pages, posts, html, codemirror, plugins, themes, editor, fancybox, post.php, post-new.php, ajax, syntax highlighting, html syntax highlighting
 Requires at least: 3.0
 Tested up to: 3.4.1
 Stable tag: 1.1
 
-WP Editor is a plugin for WordPress that replaces the default plugin and theme editors.
+WP Editor is a plugin for WordPress that replaces the default plugin and theme editors as well as the page/post editor.
 
 == Description ==
 
-WP Editor is a plugin for WordPress that replaces the default plugin and theme editors. Using integrations with CodeMirror and FancyBox to create a feature rich environment, WP Editor completely reworks the default WordPress file editing capabilities. Using Asynchronous Javascript and XML (AJAX) to retrieve files and folders, WP Editor sets a new standard for speed and reliability in a web-based editing atmosphere.
+WP Editor is a plugin for WordPress that replaces the default plugin and theme editors as well as the page/post editor. Using integrations with CodeMirror and FancyBox to create a feature rich environment, WP Editor completely reworks the default WordPress file editing capabilities. Using Asynchronous Javascript and XML (AJAX) to retrieve files and folders, WP Editor sets a new standard for speed and reliability in a web-based editing atmosphere.
 
 = Features: =
 * CodeMirror
