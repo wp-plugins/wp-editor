@@ -5,6 +5,8 @@ Tags: plugin editor, theme editor, page editor, post editor, pages, posts, html,
 Requires at least: 3.0
 Tested up to: 3.4.1
 Stable tag: 1.1
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 WP Editor is a plugin for WordPress that replaces the default plugin and theme editors as well as the page/post editor.
 
@@ -30,6 +32,32 @@ WP Editor is a plugin for WordPress that replaces the default plugin and theme e
 
 1. Upload the `wp-editor.zip` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
+
+== Frequently Asked Questions == 
+
+= Does WP Editor provide syntax highlighting for the page/post editor? =
+Yes! This feature was added in version 1.1 of WP Editor. If it's not enabled by default, visit the settings page, click on the "Post Editor" section and enable it there.
+
+= Can I search for text within a file? =
+Yes! Just use the key combination, CTRL + F or CMD + F and it will open up a search dialog box that will allow you to type in a search string.
+
+= Does WP Editor have a fullscreen mode? =
+Yes! Just hit the Esc key or click on the fullscreen button on the post editor and it will take the editor to the full size of the browser.
+
+= I don't like the active line highlighting in the editor, can I disable this? =
+Yes! Just visit the settings page and you can disable the active line highlighting there.
+
+= A file type that my theme uses is not supported by WP Editor, how can I get it added? =
+If there is a filetype that is not supported by WP Editor, just visit the [WP Editor support page](http://wpeditor.net/support) and fill out the support form.  We will do our best to include it by the next release.
+
+= My custom quicktags don't work with WP Editor, why not? =
+WP Editor uses a custom method for creating quicktags to get them to work with the update.  If you use a specific quicktag that is not supported, fill out our [support form](http://wpeditor.net/support) and we will try to implement it as soon as possible.
+
+= Is WP Editor better than the competition? =
+Yes! Well, we like to think so.  If there is a feature that another plugin has that you think WP Editor should include, let us know. We will do our best to add it in to the plugin!
+
+= I love WP Editor! Can I help somehow? =
+Yes! While we don't have a need for further developers at this time, any financial contributions are welcome!  Just visit the [WP Editor](http://wpeditor.net) website and click on the donate link, and thank you!
 
 == Screenshots ==
 
@@ -68,3 +96,11 @@ WP Editor is a plugin for WordPress that replaces the default plugin and theme e
 
 = 1.0 BETA =
 * Initial release of WP Editor
+
+== Upgrade Notice ==
+
+= 1.1 =
+Added features including support for syntax highlighting in the page/post editor
+
+= 1.0.1 =
+This version provides support for WordPress 3.4 and moves WP Editor out of beta
