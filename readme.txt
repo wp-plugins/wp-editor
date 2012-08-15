@@ -31,6 +31,14 @@ WP Editor is a plugin for WordPress that replaces the default plugin and theme e
 1. Upload the `wp-editor.zip` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 
+== Screenshots ==
+
+1. Settings page for WP Editor
+2. Syntax highlighting in Page/Post editor
+3. Updated plugin editor with Ajax file browser
+4. Updated theme editor with file upload enabled
+5. Fancybox integration
+
 == Changelog ==
 
 = 1.1 = 
