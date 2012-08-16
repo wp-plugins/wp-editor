@@ -48,7 +48,6 @@ CodeMirror.defineMode("wp_shortcodes", function(config, parserConfig) {
         while ((ch = stream.next()) != null)
           if (ch == "]") break;
           //if (ch == "[" && stream.next() == "}") break;
-          console.log(editor)
         return "mustache";
       }
       while (stream.next() != null && !stream.match("[", false)) {}
