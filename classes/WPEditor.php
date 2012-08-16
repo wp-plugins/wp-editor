@@ -209,7 +209,7 @@ class WPEditor {
     wp_register_style('fancybox', WPEDITOR_URL . '/extensions/fancybox/jquery.fancybox-1.3.4.css', false, WPEDITOR_VERSION_NUMBER);
     wp_register_style('codemirror', WPEDITOR_URL . '/extensions/codemirror/codemirror.css', false, WPEDITOR_VERSION_NUMBER);
     wp_register_style('codemirror_dialog', WPEDITOR_URL . '/extensions/codemirror/dialog.css', false, WPEDITOR_VERSION_NUMBER);
-    wp_register_style('codemirror_themes', WPEDITOR_URL . '/extensions/codemirror/theme/theme.css', false, WPEDITOR_VERSION_NUMBER);
+    wp_register_style('codemirror_themes', WPEDITOR_URL . '/extensions/codemirror/themes/themes.css', false, WPEDITOR_VERSION_NUMBER);
   }
   
   public function registerDefaultScript() {
@@ -225,6 +225,7 @@ class WPEditor {
     wp_register_script('codemirror_dialog', WPEDITOR_URL . '/extensions/codemirror/js/dialog.js', false, WPEDITOR_VERSION_NUMBER);
     wp_register_script('codemirror_search', WPEDITOR_URL . '/extensions/codemirror/js/search.js', false, WPEDITOR_VERSION_NUMBER);
     wp_register_script('codemirror_searchcursor', WPEDITOR_URL . '/extensions/codemirror/js/searchcursor.js', false, WPEDITOR_VERSION_NUMBER);
+    wp_register_script('codemirror_mustache', WPEDITOR_URL . '/extensions/codemirror/js/mustache.js', false, WPEDITOR_VERSION_NUMBER);
     //wp_register_script('codemirror_foldcode', WPEDITOR_URL . '/extensions/codemirror/js/foldcode.js');
   }
   

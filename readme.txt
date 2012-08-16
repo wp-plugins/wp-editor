@@ -4,7 +4,7 @@ Donate link: http://wpeditor.net/
 Tags: plugin editor, theme editor, page editor, post editor, pages, posts, html, codemirror, plugins, themes, editor, fancybox, post.php, post-new.php, ajax, syntax highlighting, html syntax highlighting
 Requires at least: 3.0
 Tested up to: 3.4.1
-Stable tag: 1.1
+Stable tag: 1.1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,6 +69,10 @@ Yes! While we don't have a need for further developers at this time, any financi
 
 == Changelog ==
 
+= 1.1.0.1 = 
+* Fixed Upload/Insert media buttons not working in page/post editor
+* Removed legacy CSS theme files
+
 = 1.1 = 
 * Added syntax highlighter for page/post editor
 * Added in monospace font for default theme/plugin/post editor
@@ -98,6 +102,9 @@ Yes! While we don't have a need for further developers at this time, any financi
 * Initial release of WP Editor
 
 == Upgrade Notice ==
+
+= 1.1.0.1 = 
+Fixed media buttons not working in Page/Post editor
 
 = 1.1 =
 Added features including support for syntax highlighting in the page/post editor

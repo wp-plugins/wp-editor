@@ -170,10 +170,6 @@ tags = {};
         editor_status = 'tmce';
       }
     })
-    $('#content').keyup(function() {
-      console.log('yep, keyup')
-      editor.save();
-    })
     $('#content-html').click(function() {
       if(editor_status != 'html') {
         postCodeMirror('content');
@@ -208,10 +204,41 @@ tags = {};
     }
     return is_tinyMCE_active;
   }
+  $.fn.setContentCursor = function(start, end) {
+    return this.each(function() {
+      if(this.setSelectionRange) {
+        this.focus();
+        this.setSelectionRange(start, end);
+      }
+      else if (this.createTextRange) {
+        var range = this.createTextRange();
+        range.collapse(true);
+        range.moveEnd('character', end);
+        range.moveStart('character', start);
+        range.select();
+      }
+    });
+  };
+  window.original_send_to_editor = window.send_to_editor;
+  window.send_to_editor = function(html){
+    editor.toTextArea();
+    var cursor = editor.getCursor(true);
+    var lines = $('#content').val().substr(0, this.selectionStart).split("\n");
+    var newLength = 0, line = 1, lineArray = [];
+    lineArray[0] = 0;
+    $.each(lines, function(key, value) {
+      newLength = newLength + value.length + 1;
+      lineArray[line] = newLength;
+      line++;
+    })
+    $('#content').setContentCursor(lineArray[cursor.line] + cursor.ch, lineArray[cursor.line] + cursor.ch);
+    window.original_send_to_editor(html);
+    postCodeMirror('content');
+  };
   function postCodeMirror(element) {
     var activeLine = WPEPosts.activeLine;
     editor = CodeMirror.fromTextArea(document.getElementById(element), {
-      mode: WPEPosts.mode,
+      mode: 'wp_shortcodes',
       theme: WPEPosts.theme,
       lineNumbers: WPEPosts.lineNumbers,
       lineWrapping: WPEPosts.lineWrapping,
