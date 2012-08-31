@@ -31,7 +31,7 @@ if(!class_exists('WPEditor')) {
   ob_start();
   
   // Define the WP Editor version number
-  define('WPEDITOR_VERSION_NUMBER', '1.1');
+  define('WPEDITOR_VERSION_NUMBER', '1.1.0.2');
   
   $wp_34 = false;
   if(version_compare(get_bloginfo('version'), '3.4', '>=')) {
