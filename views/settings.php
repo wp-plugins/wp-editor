@@ -256,6 +256,54 @@
                 </ul>
               </div>
             </div>
+            <div id="enable-theme-tab-characters" class="section">
+              <div class="section-header">
+                <h3><?php _e('Tab Characters', 'wpeditor'); ?></h3>
+              </div>
+              <div class="section-body">
+                <ul>
+                  <li>
+                    <label for="enable_theme_tab_characters"><?php _e('Tab Characters:', 'wpeditor'); ?></label>
+                  </li>
+                  <li class="indent">
+                    <select name="enable_theme_tab_characters">
+                      <option value="spaces"<?php echo WPEditorSetting::getValue('enable_theme_tab_characters') == 'spaces' ? ' selected="selected"' : ''; ?>><?php _e('Spaces', 'wpeditor'); ?></option>
+                      <option value="tabs"<?php echo WPEditorSetting::getValue('enable_theme_tab_characters') == 'tabs' ? ' selected="selected"' : ''; ?>><?php _e('Tabs', 'wpeditor'); ?></option>
+                    </select>
+                  </li>
+                  <li class="indent description">
+                    <p><?php _e("This will set the tab character for the theme editor.<br />Default: Spaces", 'wpeditor'); ?></p>
+                  </li>
+                  <li>
+                    <label for="enable_theme_tab_size"><?php _e('Tab Size:', 'wpeditor'); ?></label>
+                  </li>
+                  <li class="indent">
+                    <input class="small-text" name="enable_theme_tab_size" value="<?php echo WPEditorSetting::getValue('enable_theme_tab_size') ? WPEditorSetting::getValue('enable_theme_tab_size') : 2; ?>" />
+                  </li>
+                  <li class="indent description">
+                    <p><?php _e("This will set the tab size for the theme editor.<br />Default: 2", 'wpeditor'); ?></p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div id="enable-theme-editor-height" class="section">
+              <div class="section-header">
+                <h3><?php _e('Tab Characters', 'wpeditor'); ?></h3>
+              </div>
+              <div class="section-body">
+                <ul>
+                  <li>
+                    <label for="enable_theme_editor_height"><?php _e('Editor Height:', 'wpeditor'); ?></label>
+                  </li>
+                  <li class="indent">
+                    <input class="small-text" name="enable_theme_editor_height" value="<?php echo WPEditorSetting::getValue('enable_theme_editor_height') ? WPEditorSetting::getValue('enable_theme_editor_height') : 450; ?>" />
+                  </li>
+                  <li class="indent description">
+                    <p><?php _e("This will set the height in pixels for the theme editor.<br />Default: 450", 'wpeditor'); ?></p>
+                  </li>
+                </ul>
+              </div>
+            </div>
             <div id="enable-theme-file-upload" class="section">
               <div class="section-header">
                 <h3><?php _e('File Upload', 'wpeditor'); ?></h3>
@@ -429,6 +477,54 @@
                 </ul>
               </div>
             </div>
+            <div id="enable-plugin-tab-characters" class="section">
+              <div class="section-header">
+                <h3><?php _e('Tab Characters', 'wpeditor'); ?></h3>
+              </div>
+              <div class="section-body">
+                <ul>
+                  <li>
+                    <label for="enable_plugin_tab_characters"><?php _e('Tab Characters:', 'wpeditor'); ?></label>
+                  </li>
+                  <li class="indent">
+                    <select name="enable_plugin_tab_characters">
+                      <option value="spaces"<?php echo WPEditorSetting::getValue('enable_plugin_tab_characters') == 'spaces' ? ' selected="selected"' : ''; ?>><?php _e('Spaces', 'wpeditor'); ?></option>
+                      <option value="tabs"<?php echo WPEditorSetting::getValue('enable_plugin_tab_characters') == 'tabs' ? ' selected="selected"' : ''; ?>><?php _e('Tabs', 'wpeditor'); ?></option>
+                    </select>
+                  </li>
+                  <li class="indent description">
+                    <p><?php _e("This will set the tab character for the plugin editor.<br />Default: Spaces", 'wpeditor'); ?></p>
+                  </li>
+                  <li>
+                    <label for="enable_plugin_tab_size"><?php _e('Tab Size:', 'wpeditor'); ?></label>
+                  </li>
+                  <li class="indent">
+                    <input class="small-text" name="enable_plugin_tab_size" value="<?php echo WPEditorSetting::getValue('enable_plugin_tab_size') ? WPEditorSetting::getValue('enable_plugin_tab_size') : 2; ?>" />
+                  </li>
+                  <li class="indent description">
+                    <p><?php _e("This will set the tab size for the plugin editor.<br />Default: 2", 'wpeditor'); ?></p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div id="enable-plugin-editor-height" class="section">
+              <div class="section-header">
+                <h3><?php _e('Tab Characters', 'wpeditor'); ?></h3>
+              </div>
+              <div class="section-body">
+                <ul>
+                  <li>
+                    <label for="enable_plugin_editor_height"><?php _e('Editor Height:', 'wpeditor'); ?></label>
+                  </li>
+                  <li class="indent">
+                    <input class="small-text" name="enable_plugin_editor_height" value="<?php echo WPEditorSetting::getValue('enable_plugin_editor_height') ? WPEditorSetting::getValue('enable_plugin_editor_height') : 450; ?>" />
+                  </li>
+                  <li class="indent description">
+                    <p><?php _e("This will set the height in pixels for the plugin editor.<br />Default: 450", 'wpeditor'); ?></p>
+                  </li>
+                </ul>
+              </div>
+            </div>
             <div id="enable-plugin-file-upload" class="section">
               <div class="section-header">
                 <h3><?php _e('File Upload', 'wpeditor'); ?></h3>
@@ -565,6 +661,54 @@
                   </li>
                   <li class="indent description">
                     <p><?php _e("This will enable highlighting of the active line for the post editor.<br />Default: Yes", 'wpeditor'); ?></p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div id="enable-post-tab-characters" class="section">
+              <div class="section-header">
+                <h3><?php _e('Tab Characters', 'wpeditor'); ?></h3>
+              </div>
+              <div class="section-body">
+                <ul>
+                  <li>
+                    <label for="enable_post_tab_characters"><?php _e('Tab Characters:', 'wpeditor'); ?></label>
+                  </li>
+                  <li class="indent">
+                    <select name="enable_post_tab_characters">
+                      <option value="spaces"<?php echo WPEditorSetting::getValue('enable_post_tab_characters') == 'spaces' ? ' selected="selected"' : ''; ?>><?php _e('Spaces', 'wpeditor'); ?></option>
+                      <option value="tabs"<?php echo WPEditorSetting::getValue('enable_post_tab_characters') == 'tabs' ? ' selected="selected"' : ''; ?>><?php _e('Tabs', 'wpeditor'); ?></option>
+                    </select>
+                  </li>
+                  <li class="indent description">
+                    <p><?php _e("This will set the tab character for the post editor.<br />Default: Spaces", 'wpeditor'); ?></p>
+                  </li>
+                  <li>
+                    <label for="enable_post_tab_size"><?php _e('Tab Size:', 'wpeditor'); ?></label>
+                  </li>
+                  <li class="indent">
+                    <input class="small-text" name="enable_post_tab_size" value="<?php echo WPEditorSetting::getValue('enable_post_tab_size') ? WPEditorSetting::getValue('enable_post_tab_size') : 2; ?>" />
+                  </li>
+                  <li class="indent description">
+                    <p><?php _e("This will set the tab size for the post editor.<br />Default: 2", 'wpeditor'); ?></p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div id="enable-post-editor-height" class="section">
+              <div class="section-header">
+                <h3><?php _e('Tab Characters', 'wpeditor'); ?></h3>
+              </div>
+              <div class="section-body">
+                <ul>
+                  <li>
+                    <label for="enable_post_editor_height"><?php _e('Editor Height:', 'wpeditor'); ?></label>
+                  </li>
+                  <li class="indent">
+                    <input class="small-text" name="enable_post_editor_height" value="<?php echo WPEditorSetting::getValue('enable_post_editor_height') ? WPEditorSetting::getValue('enable_post_editor_height') : 450; ?>" />
+                  </li>
+                  <li class="indent description">
+                    <p><?php _e("This will set the height in pixels for the post editor.<br />Default: 450", 'wpeditor'); ?></p>
                   </li>
                 </ul>
               </div>

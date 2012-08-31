@@ -116,9 +116,6 @@ tags = {};
     $('#wpe_qt_content_block').live("click", function() {
       insertOpenCloseTag('block', 'b-quote', '\n\n<blockquote>', '</blockquote>\n\n');
     })
-    $('#wpe_qt_content_block').live("click", function() {
-      insertOpenCloseTag('block', 'b-quote', '\n\n<blockquote>', '</blockquote>\n\n');
-    })
     $('#wpe_qt_content_del').live("click", function() {
       insertOpenCloseTag('del', 'del', '<del datetime="' + _datetime() + '">', '</del>');
     })
@@ -210,7 +207,7 @@ tags = {};
         this.focus();
         this.setSelectionRange(start, end);
       }
-      else if (this.createTextRange) {
+      else if(this.createTextRange) {
         var range = this.createTextRange();
         range.collapse(true);
         range.moveEnd('character', end);
@@ -221,19 +218,26 @@ tags = {};
   };
   window.original_send_to_editor = window.send_to_editor;
   window.send_to_editor = function(html){
-    editor.toTextArea();
-    var cursor = editor.getCursor(true);
-    var lines = $('#content').val().substr(0, this.selectionStart).split("\n");
-    var newLength = 0, line = 1, lineArray = [];
-    lineArray[0] = 0;
-    $.each(lines, function(key, value) {
-      newLength = newLength + value.length + 1;
-      lineArray[line] = newLength;
-      line++;
-    })
-    $('#content').setContentCursor(lineArray[cursor.line] + cursor.ch, lineArray[cursor.line] + cursor.ch);
-    window.original_send_to_editor(html);
-    postCodeMirror('content');
+    if(editor_status == 'html') {
+      var cursor = editor.getCursor(true);
+      var lines = $('#content').val().substr(0, this.selectionStart).split("\n");
+      var newLength = 0, line = 1, lineArray = [];
+      lineArray[0] = 0;
+      $.each(lines, function(key, value) {
+        newLength = newLength + value.length + 1;
+        lineArray[line] = newLength;
+        line++;
+      });
+      editor.toTextArea();
+      $('#content').setContentCursor(lineArray[cursor.line] + cursor.ch, lineArray[cursor.line] + cursor.ch);
+      window.original_send_to_editor(html);
+      postCodeMirror('content');
+      editor.setCursor(cursor.line, cursor.ch + html.length)
+      editor.focus();
+    }
+    else {
+      window.original_send_to_editor(html);
+    }
   };
   function postCodeMirror(element) {
     var activeLine = WPEPosts.activeLine;
@@ -242,6 +246,8 @@ tags = {};
       theme: WPEPosts.theme,
       lineNumbers: WPEPosts.lineNumbers,
       lineWrapping: WPEPosts.lineWrapping,
+      indentWithTabs: WPEPosts.indentWithTabs,
+      tabSize: WPEPosts.tabSize,
       onCursorActivity: function() {
         editor.setLineClass(hlLine, null);
         hlLine = editor.setLineClass(editor.getCursor().line, activeLine);
@@ -276,6 +282,11 @@ tags = {};
       }
     });
     var hlLine = editor.setLineClass(0, activeLine);
+    if(WPEPosts.editorHeight) {
+      $('.CodeMirror-scroll, .CodeMirror, .CodeMirror-gutter').height(WPEPosts.editorHeight + 'px');
+      var scrollDivHeight = $('.CodeMirror-scroll div:first-child').height();
+      $('.CodeMirror-gutter').height(scrollDivHeight);
+    }
     if(!$('.CodeMirror .quicktags-toolbar').length) {
       $('.CodeMirror').prepend('<div class="quicktags-toolbar">' + 
         '<input type="button" id="wpe_qt_content_strong" class="wpe_ed_button" title="" value="b">' + 
@@ -295,6 +306,7 @@ tags = {};
         '<input type="button" id="wpe_qt_content_fullscreen" class="ed_button" title="" value="fullscreen">' + 
         '</div>'
       ).height($('.CodeMirror').height() + 33);
+      editor.focus();
     }
   }
 })(jQuery);

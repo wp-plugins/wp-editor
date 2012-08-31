@@ -53,7 +53,7 @@ function toggleFullscreenEditing() {
   else {
     editorDiv.removeClass('CodeMirror-fullscreen');
     editorDiv.height(toggleFullscreenEditing.beforeFullscreen.height);
-    $jq('.CodeMirror-scroll').height('450px');
+    $jq('.CodeMirror-scroll').height(toggleFullscreenEditing.beforeFullscreen.height);
     editorDiv.width('97%');
     editor.refresh();
   }

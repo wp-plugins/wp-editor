@@ -168,6 +168,11 @@
           });
           return false;
         });
+        <?php if(WPEditorSetting::getValue('enable_plugin_editor_height')) { ?>
+          $('.CodeMirror-scroll, .CodeMirror').height('<?php echo WPEditorSetting::getValue("enable_plugin_editor_height"); ?>px');
+          var scrollDivHeight = $('.CodeMirror-scroll div:first-child').height();
+          $('.CodeMirror-gutter').height(scrollDivHeight);
+        <?php } ?>
       })
     })(jQuery);
     function runCodeMirror(extension) {
@@ -205,6 +210,14 @@
         <?php } 
         if(WPEditorSetting::getValue('enable_plugin_line_wrapping')) { ?>
           lineWrapping: true,
+        <?php }
+        if(WPEditorSetting::getValue('enable_plugin_tab_characters') && WPEditorSetting::getValue('enable_plugin_tab_characters') == 'tabs') { ?>
+          indentWithTabs: true,
+        <?php }
+        if(WPEditorSetting::getValue('enable_plugin_tab_size')) { ?>
+          tabSize: <?php echo WPEditorSetting::getValue('enable_plugin_tab_size'); ?>,
+        <?php } else { ?>
+          tabSize: 2,
         <?php } ?>
         onCursorActivity: function() {
           editor.setLineClass(hlLine, null);
