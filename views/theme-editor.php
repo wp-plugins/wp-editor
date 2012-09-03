@@ -178,7 +178,10 @@
         <?php if(WPEditorSetting::getValue('enable_theme_editor_height')) { ?>
           $('.CodeMirror-scroll, .CodeMirror').height('<?php echo WPEditorSetting::getValue("enable_theme_editor_height"); ?>px');
           var scrollDivHeight = $('.CodeMirror-scroll div:first-child').height();
-          $('.CodeMirror-gutter').height(scrollDivHeight);
+          var editorDivHeight = $('.CodeMirror').height();
+          if(scrollDivHeight > editorDivHeight) {
+            $('.CodeMirror-gutter').height(scrollDivHeight);
+          }
         <?php } ?>
       })
     })(jQuery);
@@ -204,8 +207,9 @@
       <?php }
       else { ?>
         var theme = 'default';
-      <?php }
-      if(WPEditorSetting::getValue('enable_theme_active_line')) { ?>
+      <?php } ?>
+      var activeLine = false;
+      <?php if(WPEditorSetting::getValue('enable_theme_active_line')) { ?>
         var activeLine = 'activeline-' + theme;
       <?php } ?>
       editor = CodeMirror.fromTextArea(document.getElementById('new-content'), {
@@ -227,8 +231,10 @@
           tabSize: 2,
         <?php } ?>
         onCursorActivity: function() {
-          editor.setLineClass(hlLine, null);
-          hlLine = editor.setLineClass(editor.getCursor().line, activeLine);
+          if(activeLine) {
+            editor.setLineClass(hlLine, null, null);
+            hlLine = editor.setLineClass(editor.getCursor().line, null, activeLine);
+          }
         },
         onChange: function() {
           changeTrue();
@@ -238,7 +244,9 @@
           'Esc': toggleFullscreenEditing
         } // set fullscreen options here
       });
-      var hlLine = editor.setLineClass(0, activeLine);
+      if(activeLine) {
+        var hlLine = editor.setLineClass(0, activeLine);
+      }
     }
   </script> 
 </div>

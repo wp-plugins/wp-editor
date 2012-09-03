@@ -4,7 +4,7 @@ Donate link: http://wpeditor.net/
 Tags: plugin editor, theme editor, page editor, post editor, pages, posts, html, codemirror, plugins, themes, editor, fancybox, post.php, post-new.php, ajax, syntax highlighting, html syntax highlighting
 Requires at least: 3.0
 Tested up to: 3.4.1
-Stable tag: 1.1.0.2
+Stable tag: 1.1.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,6 +69,11 @@ Yes! While we don't have a need for further developers at this time, any financi
 
 == Changelog ==
 
+= 1.1.0.3 =
+* Added Ambiance, Blackboard, Lesser Dark, Vibrant Ink and XQ-Dark themes
+* Fixed text selection in all editors
+* Fixed post editor highlighter not loading when visual editor is disabled
+
 = 1.1.0.2 = 
 * Added ability to customize tab characters and size for all editors
 * Added ability to set custom editor heights for all editors
@@ -110,6 +115,10 @@ Yes! While we don't have a need for further developers at this time, any financi
 * Initial release of WP Editor
 
 == Upgrade Notice ==
+
+= 1.1.0.3 =
+Fixed text selection in all editors
+Fixed post editor highlighter not loading when visual editor is disabled
 
 = 1.1.0.2 = 
 CodeMirror 2.33

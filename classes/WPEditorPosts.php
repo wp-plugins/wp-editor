@@ -4,7 +4,7 @@ class WPEditorPosts {
   public function addPostsJquery($editor) {
     if(WPEditorSetting::getValue('enable_post_editor')) {
       $theme = WPEditorSetting::getValue('post_editor_theme') ? WPEditorSetting::getValue('post_editor_theme') : 'default';
-      $activeLine = WPEditorSetting::getValue('enable_post_active_line') == 1 ? 'activeline-' . $theme : '';
+      $activeLine = WPEditorSetting::getValue('enable_post_active_line') == 1 ? 'activeline-' . $theme : false;
       $post_editor_settings = array(
         'mode' => 'text/html',
         'theme' => $theme,

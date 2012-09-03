@@ -132,13 +132,18 @@
                       }
                       ?>
                       <option value="default" <?php echo ($theme == 'default') ? 'selected="selected"' : '' ?>><?php _e('Default', 'wpeditor'); ?></option>
+                      <option value="ambiance" <?php echo ($theme == 'ambiance') ? 'selected="selected"' : '' ?>><?php _e('Ambiance', 'wpeditor'); ?></option>
+                      <option value="blackboard" <?php echo ($theme == 'blackboard') ? 'selected="selected"' : '' ?>><?php _e('Blackboard', 'wpeditor'); ?></option>
                       <option value="cobalt" <?php echo ($theme == 'cobalt') ? 'selected="selected"' : '' ?>><?php _e('Cobalt', 'wpeditor'); ?></option>
                       <option value="eclipse" <?php echo ($theme == 'eclipse') ? 'selected="selected"' : '' ?>><?php _e('Eclipse', 'wpeditor'); ?></option>
                       <option value="elegant" <?php echo ($theme == 'elegant') ? 'selected="selected"' : '' ?>><?php _e('Elegant', 'wpeditor'); ?></option>
+                      <option value="lesser-dark" <?php echo ($theme == 'lesser-dark') ? 'selected="selected"' : '' ?>><?php _e('Lesser Dark', 'wpeditor'); ?></option>
                       <option value="monokai" <?php echo ($theme == 'monokai') ? 'selected="selected"' : '' ?>><?php _e('Monokai', 'wpeditor'); ?></option>
                       <option value="neat" <?php echo ($theme == 'neat') ? 'selected="selected"' : '' ?>><?php _e('Neat', 'wpeditor'); ?></option>
                       <option value="night" <?php echo ($theme == 'night') ? 'selected="selected"' : '' ?>><?php _e('Night', 'wpeditor'); ?></option>
                       <option value="rubyblue" <?php echo ($theme == 'rubyblue') ? 'selected="selected"' : '' ?>><?php _e('Ruby Blue', 'wpeditor'); ?></option>
+                      <option value="vibrant-ink" <?php echo ($theme == 'vibrant-ink') ? 'selected="selected"' : '' ?>><?php _e('Vibrant Ink', 'wpeditor'); ?></option>
+                      <option value="xq-dark" <?php echo ($theme == 'xq-dark') ? 'selected="selected"' : '' ?>><?php _e('XQ-Dark', 'wpeditor'); ?></option>
                     </select>
                   </li>
                   <li class="indent description">
@@ -353,13 +358,18 @@
                       }
                       ?>
                       <option value="default" <?php echo ($theme == 'default') ? 'selected="selected"' : '' ?>><?php _e('Default', 'wpeditor'); ?></option>
+                      <option value="ambiance" <?php echo ($theme == 'ambiance') ? 'selected="selected"' : '' ?>><?php _e('Ambiance', 'wpeditor'); ?></option>
+                      <option value="blackboard" <?php echo ($theme == 'blackboard') ? 'selected="selected"' : '' ?>><?php _e('Blackboard', 'wpeditor'); ?></option>
                       <option value="cobalt" <?php echo ($theme == 'cobalt') ? 'selected="selected"' : '' ?>><?php _e('Cobalt', 'wpeditor'); ?></option>
                       <option value="eclipse" <?php echo ($theme == 'eclipse') ? 'selected="selected"' : '' ?>><?php _e('Eclipse', 'wpeditor'); ?></option>
                       <option value="elegant" <?php echo ($theme == 'elegant') ? 'selected="selected"' : '' ?>><?php _e('Elegant', 'wpeditor'); ?></option>
+                      <option value="lesser-dark" <?php echo ($theme == 'lesser-dark') ? 'selected="selected"' : '' ?>><?php _e('Lesser Dark', 'wpeditor'); ?></option>
                       <option value="monokai" <?php echo ($theme == 'monokai') ? 'selected="selected"' : '' ?>><?php _e('Monokai', 'wpeditor'); ?></option>
                       <option value="neat" <?php echo ($theme == 'neat') ? 'selected="selected"' : '' ?>><?php _e('Neat', 'wpeditor'); ?></option>
                       <option value="night" <?php echo ($theme == 'night') ? 'selected="selected"' : '' ?>><?php _e('Night', 'wpeditor'); ?></option>
                       <option value="rubyblue" <?php echo ($theme == 'rubyblue') ? 'selected="selected"' : '' ?>><?php _e('Ruby Blue', 'wpeditor'); ?></option>
+                      <option value="vibrant-ink" <?php echo ($theme == 'vibrant-ink') ? 'selected="selected"' : '' ?>><?php _e('Vibrant Ink', 'wpeditor'); ?></option>
+                      <option value="xq-dark" <?php echo ($theme == 'xq-dark') ? 'selected="selected"' : '' ?>><?php _e('XQ-Dark', 'wpeditor'); ?></option>
                     </select>
                   </li>
                   <li class="indent description">
@@ -593,13 +603,18 @@
                       }
                       ?>
                       <option value="default" <?php echo ($theme == 'default') ? 'selected="selected"' : '' ?>><?php _e('Default', 'wpeditor'); ?></option>
+                      <option value="ambiance" <?php echo ($theme == 'ambiance') ? 'selected="selected"' : '' ?>><?php _e('Ambiance', 'wpeditor'); ?></option>
+                      <option value="blackboard" <?php echo ($theme == 'blackboard') ? 'selected="selected"' : '' ?>><?php _e('Blackboard', 'wpeditor'); ?></option>
                       <option value="cobalt" <?php echo ($theme == 'cobalt') ? 'selected="selected"' : '' ?>><?php _e('Cobalt', 'wpeditor'); ?></option>
                       <option value="eclipse" <?php echo ($theme == 'eclipse') ? 'selected="selected"' : '' ?>><?php _e('Eclipse', 'wpeditor'); ?></option>
                       <option value="elegant" <?php echo ($theme == 'elegant') ? 'selected="selected"' : '' ?>><?php _e('Elegant', 'wpeditor'); ?></option>
+                      <option value="lesser-dark" <?php echo ($theme == 'lesser-dark') ? 'selected="selected"' : '' ?>><?php _e('Lesser Dark', 'wpeditor'); ?></option>
                       <option value="monokai" <?php echo ($theme == 'monokai') ? 'selected="selected"' : '' ?>><?php _e('Monokai', 'wpeditor'); ?></option>
                       <option value="neat" <?php echo ($theme == 'neat') ? 'selected="selected"' : '' ?>><?php _e('Neat', 'wpeditor'); ?></option>
                       <option value="night" <?php echo ($theme == 'night') ? 'selected="selected"' : '' ?>><?php _e('Night', 'wpeditor'); ?></option>
                       <option value="rubyblue" <?php echo ($theme == 'rubyblue') ? 'selected="selected"' : '' ?>><?php _e('Ruby Blue', 'wpeditor'); ?></option>
+                      <option value="vibrant-ink" <?php echo ($theme == 'vibrant-ink') ? 'selected="selected"' : '' ?>><?php _e('Vibrant Ink', 'wpeditor'); ?></option>
+                      <option value="xq-dark" <?php echo ($theme == 'xq-dark') ? 'selected="selected"' : '' ?>><?php _e('XQ-Dark', 'wpeditor'); ?></option>
                     </select>
                   </li>
                   <li class="indent description">
