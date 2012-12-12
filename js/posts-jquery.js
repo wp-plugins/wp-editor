@@ -97,6 +97,7 @@ tags = {};
     }
   }
   $(document).ready(function(){
+    
     $('#ed_toolbar').hide();
     $('#wpe_qt_content_strong').live("click", function() {
       insertOpenCloseTag('strong', 'b', '<strong>', '</strong>');
@@ -160,17 +161,21 @@ tags = {};
       insertLinkTag(link, title, blank);
       return false;
     })
+    $('#content-tmce').attr('onclick','').unbind('click');
+    $('#content-html').attr('onclick','').unbind('click');
     $('#content-tmce').click(function() {
-      if(editor_status != 'tmce') {
+      if(editor_status !== 'tmce') {
         editor.toTextArea();
         switchEditors.switchto(this);
         editor_status = 'tmce';
       }
     })
     $('#content-html').click(function() {
-      if(editor_status != 'html') {
+      if(editor_status !== 'html') {
+        switchEditors.switchto(this);
         postCodeMirror('content');
         editor_status = 'html';
+        return false;
       }
       else {
         editor.toTextArea();
@@ -219,7 +224,7 @@ tags = {};
       }
     });
   };
-  window.original_send_to_editor = window.send_to_editor;
+  window.wp_editor_send_to_editor = window.send_to_editor;
   window.send_to_editor = function(html){
     if(editor_status == 'html') {
       var cursor = editor.getCursor(true);
@@ -233,13 +238,13 @@ tags = {};
       });
       editor.toTextArea();
       $('#content').setContentCursor(lineArray[cursor.line] + cursor.ch, lineArray[cursor.line] + cursor.ch);
-      window.original_send_to_editor(html);
+      window.wp_editor_send_to_editor(html);
       postCodeMirror('content');
       editor.setCursor(cursor.line, cursor.ch + html.length)
       editor.focus();
     }
     else {
-      window.original_send_to_editor(html);
+      window.wp_editor_send_to_editor(html);
     }
   };
   function postCodeMirror(element) {

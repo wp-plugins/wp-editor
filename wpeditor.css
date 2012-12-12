@@ -233,7 +233,7 @@ span.tiny {
 }
 .CodeMirror {
   height:450px;
-  width:97%;
+  width:100%;
 }
 .wp-editor-container .CodeMirror {
   width:100% !important;
@@ -264,7 +264,7 @@ span.tiny {
   margin:0 5px 0 0;
   padding:0;
 }
-.current_file {
+.current_file, .writable_status, .not-writable {
   font-weight:bold;
 }
 .normal_list {
@@ -324,4 +324,27 @@ a.donate, a.support {
   background-image: -o-linear-gradient(bottom,#E3E3E3,white);
   background-image: -webkit-linear-gradient(bottom,#E3E3E3,white);
   background-image: linear-gradient(bottom,#E3E3E3,white);
+}
+#plugin-editor-files .plugin-folders ul a.not-writable, #theme-editor-files .theme-folders ul a.not-writable, span.not-writable {
+  color: red;
+}
+.quicktags-toolbar {
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  -webkit-border-top-right-radius: 3px;
+  -webkit-border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+  padding: 5px 8px 0;
+  min-height: 29px;
+  border-bottom: 1px solid #D1D1D1;
+  background: #EEE;
+  background-image: -webkit-gradient(linear,left bottom,left top,from(#E5E5E5),to(#F4F4F4));
+  background-image: -webkit-linear-gradient(bottom,#E5E5E5,#F4F4F4);
+  background-image: -moz-linear-gradient(bottom,#E5E5E5,#F4F4F4);
+  background-image: -o-linear-gradient(bottom,#E5E5E5,#F4F4F4);
+  background-image: linear-gradient(to top,#E5E5E5,#F4F4F4);
+}
+.editor-button {
+  font-family:Arial, Helvetica, 'sans-serif normal';
 }

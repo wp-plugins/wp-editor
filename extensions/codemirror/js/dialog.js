@@ -3,12 +3,29 @@
 (function() {
   function dialogDiv(cm, template) {
     var wrap = cm.getWrapperElement();
-    var dialog = wrap.insertBefore(document.createElement("div"), wrap.firstChild);
+    if(hasClass(wrap.firstChild, 'quicktags-toolbar')) {
+      var dialog = insertAfter(document.createElement("div"), wrap.firstChild);
+    }
+    else {
+      var dialog = wrap.insertBefore(document.createElement("div"), wrap.firstChild);
+    }
     dialog.className = "CodeMirror-dialog";
     dialog.innerHTML = '<div>' + template + '</div>';
     return dialog;
   }
-
+  function hasClass(ele,cls) {
+    return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+  }
+  function insertAfter(newElement,targetElement) {
+    var parent = targetElement.parentNode;
+    if(parent.lastchild == targetElement) {
+      return parent.appendChild(newElement);
+    }
+    else {
+      return parent.insertBefore(newElement, targetElement.nextSibling);
+    }
+  }
+  
   CodeMirror.defineExtension("openDialog", function(template, callback) {
     var dialog = dialogDiv(this, template);
     var closed = false, me = this;

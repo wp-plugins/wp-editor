@@ -2,11 +2,15 @@
 class WPEditorAdmin {
   
   public function buildAdminMenu() {
-    $icon = WPEDITOR_URL . '/images/wpeditor_logo_16.png';
     $page_roles = WPEditorSetting::getValue('admin_page_roles');
     $page_roles = unserialize($page_roles);
-    
-    $settings = add_menu_page(__('WP Editor Settings', 'wpeditor'), __('WP Editor', 'wpeditor'), $page_roles['settings'], 'wpeditor_admin', array('WPEditorAdmin', 'addSettingsPage'), $icon);
+    if(WPEditorSetting::getValue('hide_wpeditor_menu')) {
+      $settings = add_submenu_page('options-general.php', __('WP Editor Settings', 'wpeditor'), __('WP Editor', 'wpeditor'), $page_roles['settings'], 'wpeditor_admin', array('WPEditorAdmin', 'addSettingsPage'));
+    }
+    else {
+      $icon = WPEDITOR_URL . '/images/wpeditor_logo_16.png';
+      $settings = add_menu_page(__('WP Editor Settings', 'wpeditor'), __('WP Editor', 'wpeditor'), $page_roles['settings'], 'wpeditor_admin', array('WPEditorAdmin', 'addSettingsPage'), $icon);
+    }
     //add_submenu_page('wpeditor_admin', __('Sub Menu', 'wpeditor'), __('Orders', 'wpeditor'), $page_roles['orders'], 'wpeditor_admin', array('WPEditorAdmin', 'subMenuPage'));
     add_action('admin_print_styles-' . $settings, array('WPEditorAdmin', 'defaultStylesheetAndScript'));
   }

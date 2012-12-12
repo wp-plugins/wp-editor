@@ -102,6 +102,25 @@
                 </ul>
               </div>
             </div>
+            <div id="menu-location" class="section">
+              <div class="section-header">
+                <h3><?php _e('WP Editor Menu Location', 'wpeditor'); ?></h3>
+              </div>
+              <div class="section-body">
+                <ul>
+                  <li>
+                    <label for="hide_wpeditor_menu"><?php _e('Hide WP Editor Icon:', 'wpeditor'); ?></label>
+                  </li>
+                  <li class="indent">
+                    <input type="radio" name="hide_wpeditor_menu" value="1" <?php echo (WPEditorSetting::getValue('hide_wpeditor_menu') == 1) ? 'checked="checked"' : ''; ?>> <?php _e('Yes', 'wpeditor'); ?>
+                    <input type="radio" name="hide_wpeditor_menu" value="0" <?php echo (WPEditorSetting::getValue('hide_wpeditor_menu') != 1) ? 'checked="checked"' : ''; ?>> <?php _e('No', 'wpeditor'); ?>
+                  </li>
+                  <li class="indent description">
+                    <p><?php _e("If set to yes, this will hide the WP Editor icon from the menu on the left. You will be able to access this settings page from the main Settings drop down instead.<br />Default: No", 'wpeditor'); ?></p>
+                  </li>
+                </ul>
+              </div>
+            </div>
             <div id="save-settings">
               <ul>
                 <li>

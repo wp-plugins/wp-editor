@@ -57,21 +57,29 @@ class WPEditorAjax {
     try {
       if(isset($_POST['new_content']) && isset($_POST['real_file'])) {
         $real_file = $_POST['real_file'];
-        if(file_exists($real_file) && is_writeable($real_file)) {
-          $new_content = stripslashes($_POST['new_content']);
-          if(file_get_contents($real_file) === $new_content) {
-            WPEditorLog::log('[' . basename(__FILE__) . ' - line ' . __LINE__ . "] Contents are the same");
+        if(file_exists($real_file)) {
+          if(is_writable($real_file)) {
+            $new_content = stripslashes($_POST['new_content']);
+            if(file_get_contents($real_file) === $new_content) {
+              WPEditorLog::log('[' . basename(__FILE__) . ' - line ' . __LINE__ . "] Contents are the same");
+            }
+            else {
+              $f = fopen($real_file, 'w+');
+              fwrite($f, $new_content);
+              fclose($f);
+              WPEditorLog::log('[' . basename(__FILE__) . ' - line ' . __LINE__ . "] just wrote to $real_file");
+            }
           }
           else {
-            $f = fopen($real_file, 'w+');
-            fwrite($f, $new_content);
-            fclose($f);
-            WPEditorLog::log('[' . basename(__FILE__) . ' - line ' . __LINE__ . "] just wrote to $real_file");
+            $error = __('This file is not writable', 'wpeditor');
           }
+        }
+        else {
+          $error = __('This file does not exist', 'wpeditor');
         }
       }
       else {
-        $error = 'Invalid Content';
+        $error = __('Invalid Content', 'wpeditor');
       }
     }
     catch(WPEditorException $e) {

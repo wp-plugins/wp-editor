@@ -41,7 +41,8 @@ function toggleFullscreenEditing() {
   var editorDiv = $jq('.CodeMirror');
   if(!editorDiv.hasClass('CodeMirror-fullscreen')) {
     toggleFullscreenEditing.beforeFullscreen = { 
-      height: editorDiv.height(), 
+      height: editorDiv.height(),
+      scrollHeight: editorDiv.height() - 33,
       width: editorDiv.width() 
     }
     editorDiv.addClass('CodeMirror-fullscreen');
@@ -53,8 +54,8 @@ function toggleFullscreenEditing() {
   else {
     editorDiv.removeClass('CodeMirror-fullscreen');
     editorDiv.height(toggleFullscreenEditing.beforeFullscreen.height);
-    $jq('.CodeMirror-scroll').height(toggleFullscreenEditing.beforeFullscreen.height);
-    editorDiv.width('97%');
+    $jq('.CodeMirror-scroll').height(toggleFullscreenEditing.beforeFullscreen.scrollHeight);
+    editorDiv.width('100%');
     editor.refresh();
   }
 }
@@ -131,12 +132,24 @@ function toggleFullscreenEditing() {
                 $('#save-result').fadeIn(1000).delay(3000).fadeOut(300);
               }
               else {
+                var notWritable = '';
+                if(!result.writable) {
+                  $('p.submit').hide();
+                  $('div.writable-error').show();
+                  notWritable = ' <span class="not-writable">(not writable)</span>';
+                  $('.writable_status').html('Browsing');
+                }
+                else {
+                  $('p.submit').show();
+                  $('div.writable-error').hide();
+                  $('.writable_status').html('Editing');
+                }
                 editor.toTextArea();
                 $('#new-content').val(result.content);
                 $('#file').val(result.file);
                 $('#path').val(result.path);
                 $('#extension').val(result.extension);
-                $('.current_file').html(result.file);
+                $('.current_file').html(result.file + notWritable);
                 runCodeMirror(result.extension);
               }
             }
@@ -156,13 +169,20 @@ function toggleFullscreenEditing() {
                         'filesize': value.filesize,
                         'file': value.file,
                         'extension': value.extension,
-                        'url': value.url
+                        'url': value.url,
+                        'writable': value.writable
                       }
                     ))
                   }
                   else {
+                    var writable = '';
+                    var writableClass = '';
+                    if(!value.writable) {
+                      writable = '<span class="writable">&times;</span>';
+                      writableClass = ' not-writable';
+                    }
                     newElement.children('ul').append(
-                      $('<li><a href="#" class="' + value.filetype + '">' + value.name + ' <span class="tiny">' + value.filesize + '</span></a></li>').addClass(
+                      $('<li><a href="#" class="' + value.filetype + writableClass + '">' + writable + ' ' + value.name + ' <span class="tiny">' + value.filesize + '</span></a></li>').addClass(
                         value.extension + ' ' + value.filetype
                       ).data({
                         'path': value.path,
@@ -170,7 +190,8 @@ function toggleFullscreenEditing() {
                         'filesize': value.filesize,
                         'file': value.file,
                         'extension': value.extension,
-                        'url': value.url
+                        'url': value.url,
+                        'writable': value.writable
                       }
                     ))
                   }
@@ -191,6 +212,7 @@ function toggleFullscreenEditing() {
         filesize: '',
         file: '',
         extension: '',
+        writable: '',
         open: 'opened',
         loading: 'loading'
       }, handler);
@@ -201,7 +223,8 @@ function toggleFullscreenEditing() {
         'filesize': this.options.filesize,
         'file': this.options.file,
         'extension': this.options.extension,
-        'url': this.options.url
+        'url': this.options.url,
+        'writable': this.options.writable
       }).bind('retrieve:finder', ajaxFolders).trigger('retrieve:finder')
     }
   });

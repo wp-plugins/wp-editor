@@ -16,11 +16,11 @@
           <?php echo $data['themes'][$data['theme']]['Name'] . ': '; ?>
         <?php endif; ?>
         <?php
-          if(is_writeable($data['real_file'])) {
-            echo __('Editing <span class="current_file">', 'wpeditor') . $data['file'] . __('</span>', 'wpeditor');
+          if(is_writable($data['real_file'])) {
+            echo '<span class="writable_status">' . __('Editing', 'wpeditor') . '</span> <span class="current_file">' . $data['file'] . '</span>';
           }
           else {
-            echo __('Browsing <span class="current_file">', 'wpeditor') . $data['file'] . __('</span>', 'wpeditor');
+            echo '<span class="writable_status">' . __('Browsing', 'wpeditor') . '</span> <span class="current_file">' . $data['file'] . '</span>';
           }
         ?>
       </h3>
@@ -66,7 +66,7 @@
     <?php if(WPEditorSetting::getValue('theme_file_upload')): ?>
       <h3><?php _e('Upload Files', 'wpeditor'); ?></h3>
       <div id="theme-upload-files">
-        <?php if(is_writeable($data['real_file'])): ?>
+        <?php if(is_writable($data['real_file'])): ?>
           <form enctype="multipart/form-data" id="theme_upload_form" method="POST">
               <!-- MAX_FILE_SIZE must precede the file input field -->
               <!--input type="hidden" name="MAX_FILE_SIZE" value="30000" /-->
@@ -76,7 +76,7 @@
               <input type="hidden" name="current_theme_root" value="<?php echo $data['current_theme_root']; ?>" id="current_theme_root" />
               <input type="text" name="directory" id="file_directory" style="width:190px" placeholder="<?php _e('Optional: Sub-Directory', 'wpeditor'); ?>" />
               <!-- Name of input element determines name in $_FILES array -->
-              <input name="file" type="file" id="file" style="width:180px" />
+              <input name="file" type="file" id="upload_file" style="width:180px" />
               <div class="ajax-button-loader">
                 <?php submit_button(__('Upload File', 'wpeditor'), 'primary', 'submit', false); ?>
                 <div class="ajax-loader"></div>
@@ -97,7 +97,7 @@
     </div>
   </div>
   
-  <form name="template" id="template_form" action="" method="post" class="ajax-editor-update">
+  <form name="template" id="template_form" action="" method="post" class="ajax-editor-update" style="float:left width:auto;overflow:hidden;">
     <?php wp_nonce_field('edit-theme_' . $data['real_file']); ?>
     <div>
       <textarea cols="70" rows="25" name="new-content" id="new-content" tabindex="1"><?php echo $data['content'] ?></textarea>
@@ -113,7 +113,7 @@
       ?>
       <input type="hidden" name="extension" id="extension" value="<?php echo $pathinfo['extension']; ?>" />
     </div>
-    <?php if(is_writeable($data['real_file'])): ?>
+    <?php if(is_writable($data['real_file'])): ?>
       <p class="submit">
         <?php
           if(isset($_GET['phperror'])) {
@@ -125,10 +125,28 @@
           }
         ?>
       </p>
+      <div class="error writable-error" style="display:none;">
+        <p>
+          <em><?php _e('You need to make this file writable before you can save your changes. See <a href="http://codex.wordpress.org/Changing_File_Permissions" target="_blank">the Codex</a> for more information.'); ?></em>
+        </p>
+      </div>
     <?php else: ?>
-      <p>
-        <em><?php _e('You need to make this file writable before you can save your changes. See <a href="http://codex.wordpress.org/Changing_File_Permissions" target="_blank">the Codex</a> for more information.'); ?></em>
+      <p class="submit" style="display:none;">
+        <?php
+          if(isset($_GET['phperror'])) {
+            echo '<input type="hidden" name="phperror" value="1" />'; ?>
+            <input type="submit" name="submit" class="button-primary" value="<?php _e('Update File and Attempt to Reactivate', 'wpeditor'); ?>" />
+          <?php } else { ?>
+            <input type="submit" name='submit' class="button-primary" value="<?php _e('Update File', 'wpeditor'); ?>" />
+          <?php
+          }
+        ?>
       </p>
+      <div class="error writable-error">
+        <p>
+          <em><?php _e('You need to make this file writable before you can save your changes. See <a href="http://codex.wordpress.org/Changing_File_Permissions" target="_blank">the Codex</a> for more information.'); ?></em>
+        </p>
+      </div>
     <?php endif; ?>
   </form>
   <script type="text/javascript">
@@ -175,14 +193,6 @@
           });
           return false;
         });
-        <?php if(WPEditorSetting::getValue('enable_theme_editor_height')) { ?>
-          $('.CodeMirror-scroll, .CodeMirror').height('<?php echo WPEditorSetting::getValue("enable_theme_editor_height"); ?>px');
-          var scrollDivHeight = $('.CodeMirror-scroll div:first-child').height();
-          var editorDivHeight = $('.CodeMirror').height();
-          if(scrollDivHeight > editorDivHeight) {
-            $('.CodeMirror-gutter').height(scrollDivHeight);
-          }
-        <?php } ?>
       })
     })(jQuery);
     function runCodeMirror(extension) {
@@ -247,6 +257,67 @@
       if(activeLine) {
         var hlLine = editor.setLineClass(0, activeLine);
       }
+      <?php if(WPEditorSetting::getValue('enable_theme_editor_height')) { ?>
+        $jq = jQuery.noConflict();
+        $jq('.CodeMirror-scroll, .CodeMirror').height('<?php echo WPEditorSetting::getValue("enable_theme_editor_height"); ?>px');
+        var scrollDivHeight = $jq('.CodeMirror-scroll div:first-child').height();
+        var editorDivHeight = $jq('.CodeMirror').height();
+        if(scrollDivHeight > editorDivHeight) {
+          $jq('.CodeMirror-gutter').height(scrollDivHeight);
+        }
+      <?php } ?>
+      if(!$jq('.CodeMirror .quicktags-toolbar').length) {
+        $jq('.CodeMirror').prepend('<div class="quicktags-toolbar">' + 
+          '<a href="#" class="button-primary editor-button" id="theme_save">save</a>&nbsp;' + 
+          '<a href="#" class="button-secondary editor-button" id="theme_undo">undo</a>&nbsp;' + 
+          '<a href="#" class="button-secondary editor-button" id="theme_redo">redo</a>&nbsp;' + 
+          '<a href="#" class="button-secondary editor-button" id="theme_search">search</a>&nbsp;' + 
+          '<a href="#" class="button-secondary editor-button" id="theme_find_prev">find prev</a>&nbsp;' + 
+          '<a href="#" class="button-secondary editor-button" id="theme_find_next">find next</a>&nbsp;' + 
+          '<a href="#" class="button-secondary editor-button" id="theme_replace">replace</a>&nbsp;' + 
+          '<a href="#" class="button-secondary editor-button" id="theme_replace_all">replace all</a>&nbsp;' + 
+          '<a href="#" class="button-secondary editor-button" id="theme_fullscreen">fullscreen</a>&nbsp;' + 
+          '</div>'
+        );
+        $jq('.CodeMirror-scroll').height($jq('.CodeMirror-scroll').height() - 33);
+        editor.focus();
+      }
+      $jq('#theme_fullscreen').live("click", function() {
+        toggleFullscreenEditing();
+        editor.focus();
+      })
+      $jq('#theme_save').live("click", function() {
+        $jq('.ajax-editor-update').submit();
+        editor.focus();
+      })
+      $jq('#theme_undo').live("click", function() {
+        editor.undo();
+        editor.focus();
+      })
+      $jq('#theme_redo').live("click", function() {
+        editor.redo();
+        editor.focus();
+      })
+      $jq('#theme_search').live("click", function() {
+        CodeMirror.commands.find(editor);
+        return false;
+      })
+      $jq('#theme_find_next').live("click", function() {
+        CodeMirror.commands.findNext(editor);
+        return false;
+      })
+      $jq('#theme_find_prev').live("click", function() {
+        CodeMirror.commands.findPrev(editor);
+        return false;
+      })
+      $jq('#theme_replace').live("click", function() {
+        CodeMirror.commands.replace(editor);
+        return false;
+      })
+      $jq('#theme_replace_all').live("click", function() {
+        CodeMirror.commands.replaceAll(editor);
+        return false;
+      })
     }
   </script> 
 </div>

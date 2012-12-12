@@ -69,6 +69,15 @@ Yes! While we don't have a need for further developers at this time, any financi
 
 == Changelog ==
 
+= 1.2 =
+* Added Save, Undo, Redo, Search, Find Next, Find Prev, Replace, Replace All and Fullscreen buttons to plugin/theme editors
+* Added ability to hide WP Editor menu icon from menu sidebar and move it to settings submenu
+* Added ability to check if file is writable and add error messages accordingly in plugin/theme editors
+* Added highlighting of shortcodes in Post editor
+* Updated is_writeable() to is_writable()
+* Fixed conflicts with TinyMCE Advanced and Ultimate TinyMCE plugins
+* Fixed conflict with WooThemes themes
+
 = 1.1.0.3 =
 * Added Ambiance, Blackboard, Lesser Dark, Vibrant Ink and XQ-Dark themes
 * Fixed text selection in all editors
@@ -115,6 +124,14 @@ Yes! While we don't have a need for further developers at this time, any financi
 * Initial release of WP Editor
 
 == Upgrade Notice ==
+
+= 1.2 =
+Compatibility with WordPress 3.5
+Added Save, Undo, Redo, Search, Find Next, Find Prev, Replace, Replace All and Fullscreen buttons to plugin/theme editors
+Added ability to hide WP Editor menu icon from menu sidebar and move it to settings submenu
+Added ability to check if file is writable and add error messages accordingly in plugin/theme editors
+Added highlighting of shortcodes in Post editor
+Fixed conflicts with multiple plugins and themes
 
 = 1.1.0.3 =
 Fixed text selection in all editors

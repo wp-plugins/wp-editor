@@ -14,7 +14,7 @@ class WPEditorBrowser {
         $topdir = substr($dir, 0, $pos + 1);
         $i = 0;
         while(false !== ($file = readdir($handle))) {
-          if($file != '.' && $file != '..' && substr($file, 0, 1) != '.' && WPEditorBrowser::allowedFiles($dir, $file)) {
+          if($file != '.' && $file != '..' && substr($file, 0, 1) != '.' && self::allowedFiles($dir, $file)) {
             $rows[$i]['data'] = $file;
             $rows[$i]['dir'] = is_dir($dir . $slash . $file);
             $i++;
@@ -36,6 +36,10 @@ class WPEditorBrowser {
             $output[$i]['filesize'] = '';
           }
           else {
+            $output[$i]['writable'] = false;
+            if(is_writable($output[$i]['path'])) {
+              $output[$i]['writable'] = true;
+            }
             $output[$i]['filetype'] = 'file';
             $path = pathinfo($output[$i]['name']);
             if(isset($path['extension'])) {
@@ -67,6 +71,10 @@ class WPEditorBrowser {
           $output['extension'] = $path['extension'];
         }
         $output['content'] = file_get_contents($dir);
+        $output['writable'] = false;
+        if(is_writable($output['path'])) {
+          $output['writable'] = true;
+        }
         if($type == 'theme') {
           $output['file'] = str_replace(realpath(get_theme_root()) . $slash, '', $output['path']);
           $output['url'] = get_theme_root_uri() . $slash . $output['file'];
@@ -107,6 +115,10 @@ class WPEditorBrowser {
               $output[$i]['filesize'] = '';
             }
             else {
+              $output[$i]['writable'] = false;
+              if(is_writable($output[$i]['path'])) {
+                $output[$i]['writable'] = true;
+              }
               $output[$i]['filetype'] = 'file';
               $path = pathinfo($rows[$i]['data']);
               if(isset($path['extension'])) {
@@ -116,6 +128,10 @@ class WPEditorBrowser {
             }
             if($output[$i]['path'] == $dir) {
               $output[$i]['content'] = file_get_contents($dir);
+            }
+            $output[$i]['writable'] = false;
+            if(is_writable($output[$i]['path'])) {
+              $output[$i]['writable'] = true;
             }
             if($type == 'theme') {
               $output[$i]['file'] = str_replace(realpath(get_theme_root()) . $slash, '', $output[$i]['path']);

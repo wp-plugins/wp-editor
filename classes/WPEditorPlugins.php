@@ -45,7 +45,7 @@ class WPEditorPlugins {
     $current_plugin_root = WP_PLUGIN_DIR . '/' . dirname($file);
     $real_file = WP_PLUGIN_DIR . '/' . $plugin;
     
-    if(isset($_POST['new-content']) && file_exists($real_file) && is_writeable($real_file)) {
+    if(isset($_POST['new-content']) && file_exists($real_file) && is_writable($real_file)) {
       $new_content = stripslashes($_POST['new-content']);
       if(file_get_contents($real_file) === $new_content) {
         WPEditorLog::log('[' . basename(__FILE__) . ' - line ' . __LINE__ . "] Contents are the same");
