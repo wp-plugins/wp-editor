@@ -1,7 +1,7 @@
 === WP Editor ===
 Contributors: benjaminprojas
 Donate link: http://wpeditor.net/
-Tags: plugin editor, theme editor, page editor, post editor, pages, posts, html, codemirror, plugins, themes, editor, fancybox, post.php, post-new.php, ajax, syntax highlighting, html syntax highlighting
+Tags: code editor, plugin editor, theme editor, page editor, post editor, pages, posts, html, codemirror, plugins, themes, editor, fancybox, post.php, post-new.php, ajax, syntax highlighting, html syntax highlighting
 Requires at least: 3.0
 Tested up to: 3.5
 Stable tag: 1.2
