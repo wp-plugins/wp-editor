@@ -16,8 +16,11 @@ class WPEditorPosts {
         'lookupWord' => __('Enter a word to look up:', 'wpeditor'),
         'tabSize' => WPEditorSetting::getValue('enable_post_tab_size') ? WPEditorSetting::getValue('enable_post_tab_size') : 4,
         'indentWithTabs' => WPEditorSetting::getValue('enable_post_tab_size') == 'tabs' ? true : false,
-        'editorHeight' => WPEditorSetting::getValue('enable_post_editor_height') ? WPEditorSetting::getValue('enable_post_editor_height') : false
+        'editorHeight' => WPEditorSetting::getValue('enable_post_editor_height') ? WPEditorSetting::getValue('enable_post_editor_height') : false,
+        'fontSize' => WPEditorSetting::getValue("change_post_editor_font_size") ? WPEditorSetting::getValue("change_post_editor_font_size") . "px" : "12px"
       );
+      $admin = new WPEditorAdmin();
+      $admin->editorStylesheetAndScripts();
       wp_enqueue_script('wp-editor-posts-jquery');
       wp_localize_script('wp-editor-posts-jquery', 'WPEPosts', $post_editor_settings);
     }

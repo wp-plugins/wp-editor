@@ -254,6 +254,7 @@
           'Esc': toggleFullscreenEditing
         } // set fullscreen options here
       });
+      $jq('.CodeMirror').css('font-size', '<?php echo WPEditorSetting::getValue("change_theme_editor_font_size") ? WPEditorSetting::getValue("change_theme_editor_font_size") . "px" : "12px"; ?>');
       if(activeLine) {
         var hlLine = editor.setLineClass(0, activeLine);
       }

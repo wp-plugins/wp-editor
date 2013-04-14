@@ -4,7 +4,7 @@ Donate link: http://wpeditor.net/
 Tags: code editor, plugin editor, theme editor, page editor, post editor, pages, posts, html, codemirror, plugins, themes, editor, fancybox, post.php, post-new.php, ajax, syntax highlighting, html syntax highlighting
 Requires at least: 3.0
 Tested up to: 3.5
-Stable tag: 1.2
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,6 +69,13 @@ Yes! While we don't have a need for further developers at this time, any financi
 
 == Changelog ==
 
+= 1.2.1 =
+* Added feature to preserve scroll position in post editor on save and toggle between Visual/Text views
+* Added z-index fix for gutter when WordPress menu is collapsed
+* Added ability to edit .less files
+* Added ability to change the editor font size for plugin, theme and page/post editors
+* Fixed window resize issue with codemirror expanding past its boundaries
+
 = 1.2 =
 * Added Save, Undo, Redo, Search, Find Next, Find Prev, Replace, Replace All and Fullscreen buttons to plugin/theme editors
 * Added ability to hide WP Editor menu icon from menu sidebar and move it to settings submenu
@@ -124,6 +131,13 @@ Yes! While we don't have a need for further developers at this time, any financi
 * Initial release of WP Editor
 
 == Upgrade Notice ==
+
+= 1.2.1 =
+Added feature to preserve scroll position in post editor on save and toggle between Visual/Text views
+Added z-index fix for gutter when WordPress menu is collapsed
+Added ability to edit .less files
+Added ability to change the editor font size for plugin, theme and page/post editors
+Fixed window resize issue with codemirror expanding past its boundaries
 
 = 1.2 =
 Compatibility with WordPress 3.5

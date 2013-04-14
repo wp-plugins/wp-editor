@@ -216,9 +216,29 @@
                     <label class="checkbox_label"><?php _e('.po', 'wpeditor'); ?></label>
                     <input type="checkbox" name="theme_editor_allowed_extensions[]" value="pot" <?php echo in_array('pot', $allowed_extensions) ? 'checked="checked"' : '' ?>>
                     <label class="checkbox_label"><?php _e('.pot', 'wpeditor'); ?></label>
+                    <input type="checkbox" name="theme_editor_allowed_extensions[]" value="less" <?php echo in_array('less', $allowed_extensions) ? 'checked="checked"' : '' ?>>
+                    <label class="checkbox_label"><?php _e('.less', 'wpeditor'); ?></label>
                   </li>
                   <li class="indent description">
                     <p><?php _e('Select which extensions you would like the theme editor browser to be able to access.', 'wpeditor'); ?></p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div id="change-theme-editor-font-size" class="section">
+              <div class="section-header">
+                <h3><?php _e('Font Size', 'wpeditor'); ?></h3>
+              </div>
+              <div class="section-body">
+                <ul>
+                  <li>
+                    <label for="change_theme_editor_font_size"><?php _e('Change Font Size:', 'wpeditor'); ?></label>
+                  </li>
+                  <li class="indent">
+                    <input class="small-text" name="change_theme_editor_font_size" value="<?php echo WPEditorSetting::getValue('change_theme_editor_font_size') ? WPEditorSetting::getValue('change_theme_editor_font_size') : 12; ?>" />
+                  </li>
+                  <li class="indent description">
+                    <p><?php _e("This will set the font size in pixels for the theme editor.<br />Default: 12", 'wpeditor'); ?></p>
                   </li>
                 </ul>
               </div>
@@ -442,9 +462,29 @@
                     <label class="checkbox_label"><?php _e('.po', 'wpeditor'); ?></label>
                     <input type="checkbox" name="plugin_editor_allowed_extensions[]" value="pot" <?php echo in_array('pot', $allowed_extensions) ? 'checked="checked"' : '' ?>>
                     <label class="checkbox_label"><?php _e('.pot', 'wpeditor'); ?></label>
+                    <input type="checkbox" name="plugin_editor_allowed_extensions[]" value="less" <?php echo in_array('less', $allowed_extensions) ? 'checked="checked"' : '' ?>>
+                    <label class="checkbox_label"><?php _e('.less', 'wpeditor'); ?></label>
                   </li>
                   <li class="indent description">
                     <p><?php _e('Select which extensions you would like the plugin editor browser to be able to access.', 'wpeditor'); ?></p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div id="change-plugin-editor-font-size" class="section">
+              <div class="section-header">
+                <h3><?php _e('Font Size', 'wpeditor'); ?></h3>
+              </div>
+              <div class="section-body">
+                <ul>
+                  <li>
+                    <label for="change_plugin_editor_font_size"><?php _e('Change Font Size:', 'wpeditor'); ?></label>
+                  </li>
+                  <li class="indent">
+                    <input class="small-text" name="change_plugin_editor_font_size" value="<?php echo WPEditorSetting::getValue('change_plugin_editor_font_size') ? WPEditorSetting::getValue('change_plugin_editor_font_size') : 12; ?>" />
+                  </li>
+                  <li class="indent description">
+                    <p><?php _e("This will set the font size in pixels for the plugin editor.<br />Default: 12", 'wpeditor'); ?></p>
                   </li>
                 </ul>
               </div>
@@ -638,6 +678,24 @@
                   </li>
                   <li class="indent description">
                     <p><?php _e("This allows you to select the theme for the post editor.<br />Default: Default", 'wpeditor'); ?></p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div id="change-post-editor-font-size" class="section">
+              <div class="section-header">
+                <h3><?php _e('Font Size', 'wpeditor'); ?></h3>
+              </div>
+              <div class="section-body">
+                <ul>
+                  <li>
+                    <label for="change_post_editor_font_size"><?php _e('Change Font Size:', 'wpeditor'); ?></label>
+                  </li>
+                  <li class="indent">
+                    <input class="small-text" name="change_post_editor_font_size" value="<?php echo WPEditorSetting::getValue('change_post_editor_font_size') ? WPEditorSetting::getValue('change_post_editor_font_size') : 12; ?>" />
+                  </li>
+                  <li class="indent description">
+                    <p><?php _e("This will set the font size in pixels for the post editor.<br />Default: 12", 'wpeditor'); ?></p>
                   </li>
                 </ul>
               </div>

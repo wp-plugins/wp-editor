@@ -2055,7 +2055,7 @@ window.CodeMirror = (function() {
     tabSize: 4,
     keyMap: "default",
     extraKeys: null,
-    electricChars: true,
+    electricChars: false,
     autoClearEmptyLines: false,
     onKeyEvent: null,
     onDragEvent: null,

@@ -12,6 +12,7 @@ class WPEditorAdmin {
       $settings = add_menu_page(__('WP Editor Settings', 'wpeditor'), __('WP Editor', 'wpeditor'), $page_roles['settings'], 'wpeditor_admin', array('WPEditorAdmin', 'addSettingsPage'), $icon);
     }
     //add_submenu_page('wpeditor_admin', __('Sub Menu', 'wpeditor'), __('Orders', 'wpeditor'), $page_roles['orders'], 'wpeditor_admin', array('WPEditorAdmin', 'subMenuPage'));
+    
     add_action('admin_print_styles-' . $settings, array('WPEditorAdmin', 'defaultStylesheetAndScript'));
   }
   
@@ -24,7 +25,9 @@ class WPEditorAdmin {
     $menu_slug = 'wpeditor_plugin';
     $wpeditor_plugin = add_plugins_page($page_title, $menu_title, $capability, $menu_slug, array('WPEditorPlugins', 'addPluginsPage'));
     add_action("load-$wpeditor_plugin", array('WPEditorPlugins', 'pluginsHelpTab'));
-    add_action('admin_print_styles', array('WPEditorAdmin', 'editorStylesheetAndScripts'));
+    if(isset($_GET['page']) && $_GET['page'] == 'wpeditor_plugin') {
+      add_action('admin_print_styles', array('WPEditorAdmin', 'editorStylesheetAndScripts'));
+    }
   }
   
   public function addThemesPage() {
@@ -37,7 +40,9 @@ class WPEditorAdmin {
     $wpeditor_themes = add_theme_page($page_title, $menu_title, $capability, $menu_slug, array('WPEditorThemes', 'addThemesPage'));
     
     add_action("load-$wpeditor_themes", array('WPEditorThemes', 'themesHelpTab'));
-    add_action('admin_print_styles', array('WPEditorAdmin', 'editorStylesheetAndScripts'));
+    if(isset($_GET['page']) && $_GET['page'] == 'wpeditor_themes') {
+      add_action('admin_print_styles', array('WPEditorAdmin', 'editorStylesheetAndScripts'));
+    }
   }
   
   public function addSettingsPage() {
