@@ -194,7 +194,8 @@ tags = {};
         return false;
       }
     })
-    $('#publish').click(function(e) {
+    $('#post').submit(function(e) {
+      changeReset();
       var scrollPosition = editor.getScrollInfo();
       document.cookie="scrollPositionX=" + scrollPosition.x;
       document.cookie="scrollPositionY=" + scrollPosition.y;

@@ -78,7 +78,7 @@ class WPEditorPlugins {
     echo WPEditor::getView('views/plugin-editor.php', $data);
   }
   
-  public function pluginsHelpTab() {
+  public static function pluginsHelpTab() {
     global $wpeditor_plugin;
     $screen = get_current_screen();
     if(function_exists('add_help_tab')) {

@@ -1,7 +1,7 @@
 <?php
 class WPEditorAdmin {
   
-  public function buildAdminMenu() {
+  public static function buildAdminMenu() {
     $page_roles = WPEditorSetting::getValue('admin_page_roles');
     $page_roles = unserialize($page_roles);
     if(WPEditorSetting::getValue('hide_wpeditor_menu')) {
@@ -30,7 +30,7 @@ class WPEditorAdmin {
     }
   }
   
-  public function addThemesPage() {
+  public static function addThemesPage() {
     global $wpeditor_themes;
     
     $page_title = __('Theme Editor', 'wpeditor');
@@ -45,12 +45,12 @@ class WPEditorAdmin {
     }
   }
   
-  public function addSettingsPage() {
+  public static function addSettingsPage() {
     $view = WPEditor::getView('views/settings.php');
     echo $view;
   }
   
-  public function editorStylesheetAndScripts() {
+  public static function editorStylesheetAndScripts() {
     wp_enqueue_style('wpeditor');
     wp_enqueue_script('wpeditor');
     wp_enqueue_style('fancybox');
@@ -70,12 +70,12 @@ class WPEditorAdmin {
     wp_enqueue_script('codemirror_searchcursor');
   }
   
-  public function defaultStylesheetAndScript() {
+  public static function defaultStylesheetAndScript() {
     wp_enqueue_style('wpeditor');
     wp_enqueue_script('wpeditor');
   }
   
-  public function removeDefaultEditorMenus() {
+  public static function removeDefaultEditorMenus() {
     // Remove default plugin editor
     if(WPEditorSetting::getValue('hide_default_plugin_editor') == 1) {
       global $submenu;

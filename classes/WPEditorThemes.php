@@ -122,7 +122,7 @@ class WPEditorThemes {
     echo WPEditor::getView('views/theme-editor.php', $data);
   }
   
-  public function themesHelpTab() {
+  public static function themesHelpTab() {
     global $wpeditor_themes;
     $screen = get_current_screen();
     if(function_exists('add_help_tab') && function_exists('set_help_sidebar')) {

@@ -3,7 +3,7 @@
 Plugin Name: WP Editor
 Plugin URI: http://wpeditor.net
 Description: This plugin modifies the default behavior of the WordPress plugin and theme editors.
-Version: 1.2.1
+Version: 1.2.2
 Author: Benjamin Rojas
 Author URI: http://benjaminrojas.net
 Text Domain: wpeditor
@@ -37,8 +37,18 @@ if(!class_exists('WPEditor')) {
   define('WP_34', $wp_34);
   
   // Define the default path and URL for the WP Editor plugin
-  define('WPEDITOR_PATH', plugin_dir_path( __FILE__ ));
-  define('WPEDITOR_URL', plugins_url() . '/' . basename(dirname(__FILE__)));
+  $plugin_file = __FILE__;
+  if(isset($plugin)) {
+    $plugin_file = $plugin;
+  }
+  elseif(isset($mu_plugin)) {
+    $plugin_file = $mu_plugin;
+  }
+  elseif(isset($network_plugin)) {
+    $plugin_file = $network_plugin;
+  }
+  define('WPEDITOR_PATH', WP_PLUGIN_DIR . '/' . basename(dirname($plugin_file)) . '/');
+  define('WPEDITOR_URL', plugin_dir_url(WPEDITOR_PATH) . basename(dirname($plugin_file)) . '/');
   
   // Define the WP Editor version number
   define('WPEDITOR_VERSION_NUMBER', wpEditorVersionNumber());
@@ -77,7 +87,7 @@ if(!class_exists('WPEditor')) {
 }
 
 function wpEditorSettingsLink($links, $file) {
-  $thisFile = plugin_basename(__FILE__);
+  $thisFile = plugin_basename(WPEDITOR_PATH) . '/' . basename(__FILE__);
   if($file == $thisFile) {
     $settings = '<a href="' . admin_url('admin.php?page=wpeditor_admin') . '" title="' . __('Open the settings page for this plugin', 'wpeditor') . '">' . __('Settings', 'wpeditor') . '</a>';
     array_unshift($links, $settings);

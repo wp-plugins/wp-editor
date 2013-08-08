@@ -1,7 +1,7 @@
 <?php
 class WPEditorPosts {
   
-  public function addPostsJquery($editor) {
+  public static function addPostsJquery($editor) {
     if(WPEditorSetting::getValue('enable_post_editor')) {
       $theme = WPEditorSetting::getValue('post_editor_theme') ? WPEditorSetting::getValue('post_editor_theme') : 'default';
       $activeLine = WPEditorSetting::getValue('enable_post_active_line') == 1 ? 'activeline-' . $theme : false;
@@ -19,8 +19,7 @@ class WPEditorPosts {
         'editorHeight' => WPEditorSetting::getValue('enable_post_editor_height') ? WPEditorSetting::getValue('enable_post_editor_height') : false,
         'fontSize' => WPEditorSetting::getValue("change_post_editor_font_size") ? WPEditorSetting::getValue("change_post_editor_font_size") . "px" : "12px"
       );
-      $admin = new WPEditorAdmin();
-      $admin->editorStylesheetAndScripts();
+      WPEditorAdmin::editorStylesheetAndScripts();
       wp_enqueue_script('wp-editor-posts-jquery');
       wp_localize_script('wp-editor-posts-jquery', 'WPEPosts', $post_editor_settings);
     }

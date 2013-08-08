@@ -3,8 +3,8 @@ Contributors: benjaminprojas
 Donate link: http://wpeditor.net/
 Tags: code editor, plugin editor, theme editor, page editor, post editor, pages, posts, html, codemirror, plugins, themes, editor, fancybox, post.php, post-new.php, ajax, syntax highlighting, html syntax highlighting
 Requires at least: 3.0
-Tested up to: 3.5
-Stable tag: 1.2.1
+Tested up to: 3.6
+Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,6 +69,13 @@ Yes! While we don't have a need for further developers at this time, any financi
 
 == Changelog ==
 
+= 1.2.2 = 
+* Fixed issues with PHP 5.4+
+* Fixed issue with selecting theme file types not working
+* Fixed issue with double scrollbar
+* Fixed issue with error message appearing when trying to save a post/page
+* Fixed issue with settings link not appearing for symlink installs
+
 = 1.2.1 =
 * Added feature to preserve scroll position in post editor on save and toggle between Visual/Text views
 * Added z-index fix for gutter when WordPress menu is collapsed
@@ -131,6 +138,12 @@ Yes! While we don't have a need for further developers at this time, any financi
 * Initial release of WP Editor
 
 == Upgrade Notice ==
+
+= 1.2.2 = 
+Fixed issues with PHP 5.4+
+Fixed issue with selecting theme file types not working
+Fixed issue with double scrollbar
+Fixed issue with error message appearing when trying to save a post/page
 
 = 1.2.1 =
 Added feature to preserve scroll position in post editor on save and toggle between Visual/Text views

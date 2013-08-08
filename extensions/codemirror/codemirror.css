@@ -14,8 +14,8 @@
 .CodeMirror-scrollbar {
   position: absolute;
   right: 0; top: 0;
-  overflow-x: hidden;
-  overflow-y: scroll;
+  overflow: hidden;
+  /*overflow-y: scroll;*/
   z-index: 5;
 }
 .CodeMirror-scrollbar-inner {

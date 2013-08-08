@@ -203,7 +203,12 @@ class WPEditorBrowser {
       $slash = '\\';
     }
     $output = true;
-    $allowed_extensions = explode('~', WPEditorSetting::getValue('plugin_editor_allowed_extensions'));
+    if(strstr($dir, 'plugins')) {
+      $allowed_extensions = explode('~', WPEditorSetting::getValue('plugin_editor_allowed_extensions'));
+    }
+    elseif(strstr($dir, 'themes')) {
+      $allowed_extensions = explode('~', WPEditorSetting::getValue('theme_editor_allowed_extensions'));
+    }
     
     if(is_dir($dir . $slash . $file)) {
       $output = true;
