@@ -213,6 +213,9 @@ li.indent {
 #plugin-editor-files .plugin-folders ul li.less, #theme-editor-files .theme-folders ul li.less {
   background:url('images/less.png') 0px 0px no-repeat;
 }
+#plugin-editor-files .plugin-folders ul li.xml, #theme-editor-files .theme-folders ul li.xml {
+  background:url('images/xml.png') 0px 0px no-repeat;
+}
 #plugin-editor-files .plugin-folders ul li.png, #theme-editor-files .theme-folders ul li.png {
   background:url('images/png.png') 0px 0px no-repeat;
 }

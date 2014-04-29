@@ -157,7 +157,7 @@ tags = {};
     $('#wpe_qt_content_save').live("click", function() {
       editor.save();
       $('#wp_mce_fullscreen').val($('#content').val());
-      fullscreen.save();
+      wp.editor.fullscreen.save();
       changeReset();
     });
     $('#wp-link-submit').live("click", function() {
@@ -358,7 +358,7 @@ tags = {};
         '<input type="button" id="wpe_qt_content_lookup" class="ed_button" title="" value="lookup">' + 
         '<input type="button" id="wpe_qt_content_fullscreen" class="ed_button" title="" value="fullscreen">' + 
         '<div id="wp-fullscreen-save">' +
-        '<input type="button" id="wpe_qt_content_save" class="button-primary" title="" value="' + WPEPosts.save + '" style="float:right;display:none;"><span class="spinner"></span></div>' +
+        '<input type="button" id="wpe_qt_content_save" class="button-primary" title="" value="' + WPEPosts.save + '" style="float:right;display:none;font-family: \'Open Sans\', sans-serif;"><span class="spinner"></span></div>' +
         '</div>'
       ).height($('.CodeMirror').height() + 33);
       $('.CodeMirror-scroll').height($('.CodeMirror-wrap').height() - $('#wp-editor-quicktags').height() - 3);

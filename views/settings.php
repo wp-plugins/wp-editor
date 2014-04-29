@@ -218,6 +218,8 @@
                     <label class="checkbox_label"><?php _e('.pot', 'wpeditor'); ?></label>
                     <input type="checkbox" name="theme_editor_allowed_extensions[]" value="less" <?php echo in_array('less', $allowed_extensions) ? 'checked="checked"' : '' ?>>
                     <label class="checkbox_label"><?php _e('.less', 'wpeditor'); ?></label>
+                    <input type="checkbox" name="theme_editor_allowed_extensions[]" value="xml" <?php echo in_array('xml', $allowed_extensions) ? 'checked="checked"' : '' ?>>
+                    <label class="checkbox_label"><?php _e('.xml', 'wpeditor'); ?></label>
                   </li>
                   <li class="indent description">
                     <p><?php _e('Select which extensions you would like the theme editor browser to be able to access.', 'wpeditor'); ?></p>
@@ -483,6 +485,8 @@
                     <label class="checkbox_label"><?php _e('.pot', 'wpeditor'); ?></label>
                     <input type="checkbox" name="plugin_editor_allowed_extensions[]" value="less" <?php echo in_array('less', $allowed_extensions) ? 'checked="checked"' : '' ?>>
                     <label class="checkbox_label"><?php _e('.less', 'wpeditor'); ?></label>
+                    <input type="checkbox" name="plugin_editor_allowed_extensions[]" value="xml" <?php echo in_array('xml', $allowed_extensions) ? 'checked="checked"' : '' ?>>
+                    <label class="checkbox_label"><?php _e('.xml', 'wpeditor'); ?></label>
                   </li>
                   <li class="indent description">
                     <p><?php _e('Select which extensions you would like the plugin editor browser to be able to access.', 'wpeditor'); ?></p>
