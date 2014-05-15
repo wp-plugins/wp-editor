@@ -202,10 +202,12 @@ tags = {};
     })
     $('#post').submit(function(e) {
       changeReset();
-      var scrollPosition = editor.getScrollInfo();
-      document.cookie="scrollPositionX=" + scrollPosition.x;
-      document.cookie="scrollPositionY=" + scrollPosition.y;
-      editor.save();
+      if(editor_status == 'html') {
+        var scrollPosition = editor.getScrollInfo();
+        document.cookie="scrollPositionX=" + scrollPosition.x;
+        document.cookie="scrollPositionY=" + scrollPosition.y;
+        editor.save();
+      }
     })
   })
   function getPositionCookie(key) {
@@ -292,6 +294,7 @@ tags = {};
       lineNumbers: WPEPosts.lineNumbers,
       lineWrapping: WPEPosts.lineWrapping,
       indentWithTabs: WPEPosts.indentWithTabs,
+      indentSize: WPEPosts.indentSize,
       tabSize: WPEPosts.tabSize,
       onCursorActivity: function() {
         if(activeLine) {
