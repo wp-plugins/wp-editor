@@ -307,7 +307,7 @@
         if(WPEditorSetting::getValue('enable_theme_line_numbers')) { ?>
           lineNumbers: true,
         <?php } ?>
-          indentUnit: <?php echo WPEditorSetting::getValue('theme_indent_unit'); ?>,
+          indentUnit: <?php echo WPEditorSetting::getValue('theme_indent_unit') == '' ? 2 : WPEditorSetting::getValue('theme_indent_unit'); ?>,
         <?php
         if(WPEditorSetting::getValue('enable_theme_line_wrapping')) { ?>
           lineWrapping: true,

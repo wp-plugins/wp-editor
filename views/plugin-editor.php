@@ -308,7 +308,7 @@
         if(WPEditorSetting::getValue('enable_plugin_line_wrapping')) { ?>
           lineWrapping: true,
         <?php } ?>
-        indentUnit: <?php echo WPEditorSetting::getValue('plugin_indent_unit'); ?>,
+        indentUnit: <?php echo WPEditorSetting::getValue('plugin_indent_unit') == '' ? 2 : WPEditorSetting::getValue('plugin_indent_unit'); ?>,
         <?php
         if(WPEditorSetting::getValue('enable_plugin_tab_characters') && WPEditorSetting::getValue('enable_plugin_tab_characters') == 'tabs') { ?>
           indentWithTabs: true,
