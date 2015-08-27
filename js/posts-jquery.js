@@ -178,13 +178,15 @@ tags = {};
         document.cookie="scrollPositionX=" + scrollPosition.x;
         document.cookie="scrollPositionY=" + scrollPosition.y;
         editor.toTextArea();
-        switchEditors.switchto(this);
+        id = $(this).attr( 'data-wp-editor-id' );
+        switchEditors.go(id, 'tmce');
         editor_status = 'tmce';
       }
     })
     $('#content-html').click(function() {
       if(editor_status !== 'html') {
-        switchEditors.switchto(this);
+        id = $(this).attr( 'data-wp-editor-id' );
+        switchEditors.go(id, 'html');
         postCodeMirror('content');
         editor.scrollTo(getPositionCookie('scrollPositionX'), getPositionCookie('scrollPositionY'));
         editor_status = 'html';
@@ -345,6 +347,8 @@ tags = {};
     }
     if(!$('.CodeMirror .quicktags-toolbar').length) {
       $('.CodeMirror').prepend('<div id="wp-editor-quicktags" class="quicktags-toolbar">' + 
+        '<div id="wp-fullscreen-save">' +
+        '<input type="button" id="wpe_qt_content_save" class="button-primary" title="" value="' + WPEPosts.save + '" style="float:right;display:none;font-family: \'Open Sans\', sans-serif;"><span class="spinner"></span></div>' +
         '<input type="button" id="wpe_qt_content_strong" class="wpe_ed_button" title="" value="b">' + 
         '<input type="button" id="wpe_qt_content_em" class="wpe_ed_button" title="" value="i">' + 
         '<input type="button" id="wpe_qt_content_link" class="wpe_ed_button" title="" value="link">' + 
@@ -360,8 +364,6 @@ tags = {};
         '<input type="button" id="wpe_qt_content_page" class="ed_button" title="" value="page">' + 
         '<input type="button" id="wpe_qt_content_lookup" class="ed_button" title="" value="lookup">' + 
         '<input type="button" id="wpe_qt_content_fullscreen" class="ed_button" title="" value="fullscreen">' + 
-        '<div id="wp-fullscreen-save">' +
-        '<input type="button" id="wpe_qt_content_save" class="button-primary" title="" value="' + WPEPosts.save + '" style="float:right;display:none;font-family: \'Open Sans\', sans-serif;"><span class="spinner"></span></div>' +
         '</div>'
       ).height($('.CodeMirror').height() + 33);
       $('.CodeMirror-scroll').height($('.CodeMirror-wrap').height() - $('#wp-editor-quicktags').height() - 3);
